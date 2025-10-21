@@ -15,10 +15,8 @@
         </a>
       </div>
     </v-app-bar>
-    <v-main>
-      <v-container>
-        <slot />
-      </v-container>
+    <v-main style="margin-bottom: 100px;">
+      <slot />
     </v-main>
 
     <v-footer theme="dark"

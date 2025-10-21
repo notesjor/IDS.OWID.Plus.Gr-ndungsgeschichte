@@ -1,3 +1,301 @@
+@import "@mdi/font/css/materialdesignicons.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Libertinus - fetten Fonts von der ÖA ...arrgh */
+@font-face {
+  font-family: "Libertinus";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""),
+    url("/fonts/libertinus/LibertinusSerifRegular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Libertinus";
+  font-style: italic;
+  font-weight: 400;
+  src: local(""),
+    url("/fonts/libertinus/LibertinusSerifItalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Libertinus";
+  font-style: normal;
+  font-weight: bold;
+  src: local(""),
+    url("/fonts/libertinus/LibertinusSerifBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Libertinus";
+  font-style: italic;
+  font-weight: bold;
+  src: local(""),
+    url("/fonts/libertinus/LibertinusSerifBoldItalic.woff2") format("woff2");
+}
+
+/* fira-sans-100 - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 100;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-100.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-100.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-100italic - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 100;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-100italic.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-100italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-200 - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 200;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-200.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-200.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-200italic - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 200;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-200italic.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-200italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-300 - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 300;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-300.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-300.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-300italic - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 300;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-300italic.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-300italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-regular - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-regular.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-regular.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-italic - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 400;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-italic.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-500 - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 500;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-500.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-500.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-500italic - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 500;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-500italic.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-500italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-600 - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-600.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-600.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-600italic - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 600;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-600italic.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-600italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-700 - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-700.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-700.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-700italic - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 700;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-700italic.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-700italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-800 - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 800;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-800.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-800.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-800italic - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 800;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-800italic.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-800italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-900italic - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: italic;
+  font-weight: 900;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-900italic.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-900italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* fira-sans-900 - latin */
+@font-face {
+  font-family: "Fira Sans";
+  font-style: normal;
+  font-weight: 900;
+  src: local(""),
+    url("/fonts/fira-sans/fira-sans-v11-latin-900.woff2") format("woff2"),
+    url("/fonts/fira-sans/fira-sans-v11-latin-900.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+:root {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  --FS-BODYTEXT: 18px;
+  --FF-BODYTEXT: "Fira Sans";
+  --FF-DISPLAY: "Fira Sans";
+  --FF-TERMS: "Fira Sans";
+
+  --CC-BASE: #2962ff;
+  --CC-RES: #df0c2f;
+  --CC-INF: #9716ca;
+  --CC-POS: #0dc513;
+  --CC-PAT: #db6900;
+
+  --TXT-WIDTH: 60ch;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: var(--FS-BODYTEXT);
+  font-family: var(--FF-BODYTEXT);
+
+  hyphens: auto;
+  hyphenate-character: auto 5;
+  hyphenate-limit-chars: auto 5;
+  hyphenate-limit-lines: 2;
+  -webkit-hyphens: auto;
+  -webkit-hyphenate-limit-chars: auto 3;
+  -webkit-hyphenate-limit-lines: 4;
+  -ms-hyphens: auto;
+  -ms-hyphenate-limit-chars: auto 3;
+  -ms-hyphenate-limit-lines: 4;
+  text-align: justify;
+}
+
+h1 {
+  @apply text-3xl;
+  margin: 10px 0 10px 0;
+  font-family: var(--FF-DISPLAY);
+  text-align: left;
+}
+
+h2 {
+  @apply text-2xl;
+  margin: 10px 0 10px 0;
+  font-family: var(--FF-DISPLAY);
+  text-align: left;
+}
+
+h3 {
+  @apply text-xl;
+  margin: 10px 0 10px 0;
+  font-family: var(--FF-DISPLAY);
+  text-align: left;
+}
+
+h4 {
+  @apply text-lg;
+  margin: 10px 0 10px 0;
+  font-family: var(--FF-DISPLAY);
+  text-align: left;
+  font-weight: 500;
+}
