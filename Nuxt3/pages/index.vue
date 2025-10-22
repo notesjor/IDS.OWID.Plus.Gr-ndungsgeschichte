@@ -90,15 +90,15 @@
     </v-col>
     <v-col cols="9" style="margin:-15px 0px 0px -15px">
       <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-start;">
-        <papertack src="/dummy01.jpg" year="1945" author="Arnsberg" pages="5" category="Urkunde" />
-        <papertack src="/dummy02.jpg" year="1963" author="Müller" pages="7" category="Bericht" />
-        <papertack src="/dummy03.jpg" year="1978" author="Wolfberger" pages="4" category="Brief" />
-        <papertack src="/dummy04.jpg" year="1955" author="Hruodgêr" pages="3" category="Aktennotiz" />
-        <papertack src="/dummy01.jpg" year="1948" author="Schmidt" pages="5" category="Bericht" />
-        <papertack src="/dummy02.jpg" year="1966" author="Müller" pages="7" category="Bericht" />
-        <papertack src="/dummy03.jpg" year="1981" author="Wolfberger" pages="4" category="Bericht" />
-        <papertack src="/dummy02.jpg" year="1933" author="Müller" pages="7" category="Bericht" />
-        <papertack src="/dummy04.jpg" year="1951" author="Hruodgêr" pages="3" category="Aktennotiz" />
+        <papertack src="/ggesch/dummy01.jpg" year="1945" author="Arnsberg" pages="5" category="Urkunde" />
+        <papertack src="/ggesch/dummy02.jpg" year="1963" author="Müller" pages="7" category="Bericht" />
+        <papertack src="/ggesch/dummy03.jpg" year="1978" author="Wolfberger" pages="4" category="Brief" />
+        <papertack src="/ggesch/dummy04.jpg" year="1955" author="Hruodgêr" pages="3" category="Aktennotiz" />
+        <papertack src="/ggesch/dummy01.jpg" year="1948" author="Schmidt" pages="5" category="Bericht" />
+        <papertack src="/ggesch/dummy02.jpg" year="1966" author="Müller" pages="7" category="Bericht" />
+        <papertack src="/ggesch/dummy03.jpg" year="1981" author="Wolfberger" pages="4" category="Bericht" />
+        <papertack src="/ggesch/dummy02.jpg" year="1933" author="Müller" pages="7" category="Bericht" />
+        <papertack src="/ggesch/dummy04.jpg" year="1951" author="Hruodgêr" pages="3" category="Aktennotiz" />
         <papertack v-for="i in 100" :key="i"></papertack>
       </div>
     </v-col>

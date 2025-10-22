@@ -45,7 +45,7 @@ export default defineNuxtConfig({
   },
 
   app: {
-    baseURL: "/"
+    baseURL: "/ggesch"
   },
 
   compatibilityDate: "2024-12-04"
