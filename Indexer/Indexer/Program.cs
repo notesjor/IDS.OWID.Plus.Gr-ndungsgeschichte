@@ -9,30 +9,55 @@ using Elastic.Clients.Elasticsearch.Nodes;
 using Elastic.Clients.Elasticsearch.TransformManagement;
 using System.Globalization;
 using System.Text.Json.Serialization;
+using Indexer.Model;
+using System.Text;
 
 namespace Indexer
 {
   internal class Program
   {
     private static string _indexName = "gruendungsgeschichte";
-    private static CreateIndexResponse _index;
     private static ElasticsearchClient _client;
 
     static void Main(string[] args)
     {
+      var docs = ReadCsv<Document>("data/list_documents.tsv");
+      docs = FixIndexNumbers(docs);
+
       EnsureIndex();
 
-      ProcessCompany();
+      ProcessCompany(docs);
+      ProcessPerson(docs);
+      ProcessDocument(docs);
+    }
+
+    private static Document[] FixIndexNumbers(Document[] docs)
+    {
+      for (var i = 0; i < docs.Length; i++)
+      {
+        if (docs[i].ArchiveRack.Length == 1)
+          docs[i].ArchiveRack = $"0{docs[i].ArchiveRack}";
+        if (docs[i].ArchiveFolder.Length == 1)
+          docs[i].ArchiveFolder = $"0{docs[i].ArchiveFolder}";
+        if (docs[i].ArchiveDocument.Length == 1)
+          docs[i].ArchiveDocument = $"0{docs[i].ArchiveDocument}";
+
+        docs[i].Id = $"{docs[i].ArchiveRack}_{docs[i].ArchiveFolder}_{docs[i].ArchiveDocument}";
+      }
+      return docs;
     }
 
     private static void EnsureIndex()
     {
       _client = new ElasticsearchClient();
-      if (_client.Indices.Exists(_indexName).Exists)
-        _client.Indices.Delete(_indexName);
-      _index = _client.Indices.Create(_indexName);
+      if (_client.Indices.Exists($"{_indexName}_company").Exists)
+      {
+        _client.Indices.Delete($"{_indexName}_company");
+        _client.Indices.Delete($"{_indexName}_person");
+        _client.Indices.Delete($"{_indexName}_doc");
+      }
 
-      var create = _client.Indices.CreateAsync(new CreateIndexRequest(_indexName + "_company")
+      var create = _client.Indices.CreateAsync(new CreateIndexRequest($"{_indexName}_company")
       {
         Settings = new IndexSettings
         {
@@ -44,13 +69,17 @@ namespace Indexer
           {
             { "name", new KeywordProperty() },
             { "city", new KeywordProperty() },
-            { "country", new KeywordProperty() },
+            { "wiki_id", new KeywordProperty{ Index = false } },
+            { "gnd_id", new KeywordProperty{ Index = false } },
+            { "wiki_url", new KeywordProperty{ Index = false } },
+            { "gnd_url", new KeywordProperty{ Index = false } },
+            { "docs" , new KeywordProperty() }
           }
         }
       });
       create.Wait();
 
-      create = _client.Indices.CreateAsync(new CreateIndexRequest(_indexName + "_person")
+      create = _client.Indices.CreateAsync(new CreateIndexRequest($"{_indexName}_person")
       {
         Settings = new IndexSettings
         {
@@ -61,33 +90,25 @@ namespace Indexer
           Properties = new Properties
           {
             { "id", new KeywordProperty() },
-            { "key", new KeywordProperty() },
-            { "lbl", new TextProperty
-              {
-                Analyzer = "german_custom",
-                SearchAnalyzer = "german_custom",
-                Fields = new Properties
-                {
-                  { "icu", new IcuCollationProperty
-                    {
-                      Language = "de",
-                      Country = "DE",
-                      Strength = IcuCollationStrength.Primary,
-                      Alternate = IcuCollationAlternate.NonIgnorable,
-                      CaseFirst = IcuCollationCaseFirst.Upper,
-                    }
-                  }
-                }
-              }
-            },
-            { "url", new KeywordProperty() },
-            { "dic", new KeywordProperty() }
+            { "name_family", new KeywordProperty() },
+            { "name_given", new KeywordProperty() },
+            { "wiki_id", new KeywordProperty{ Index = false } },
+            { "gnd_id", new KeywordProperty{ Index = false } },
+            { "wiki_url", new KeywordProperty{ Index = false } },
+            { "gnd_url", new KeywordProperty{ Index = false } },
+            { "year_birth", new KeywordProperty{ Index = false } },
+            { "year_death", new KeywordProperty{ Index = false } },
+            { "gender", new KeywordProperty() },
+            { "info", new KeywordProperty{ Index = false } },
+            { "docs_author" , new KeywordProperty() },
+            { "docs_recipient" , new KeywordProperty() },
+            { "docs_referenced" , new KeywordProperty() },
           }
         }
       });
       create.Wait();
 
-      create = _client.Indices.CreateAsync(new CreateIndexRequest(_indexName + "_docs")
+      create = _client.Indices.CreateAsync(new CreateIndexRequest($"{_indexName}_doc")
       {
         Settings = new IndexSettings
         {
@@ -116,79 +137,97 @@ namespace Indexer
           Properties = new Properties
           {
             { "id", new KeywordProperty() },
-            { "key", new KeywordProperty() },
-            { "lbl", new TextProperty
+            { "archive_rack", new KeywordProperty() },
+            { "archive_folder", new KeywordProperty() },
+            { "archive_document", new KeywordProperty() },
+            { "archive_folder_name", new KeywordProperty() },
+            { "text_type", new KeywordProperty() },
+            { "title", new KeywordProperty() },
+            { "content", new KeywordProperty() },
+            { "persons_author", new KeywordProperty() },
+            { "persons_recipient", new KeywordProperty() },
+            { "persons_referenced", new KeywordProperty() },
+            { "referenced_companies", new KeywordProperty() },
+            { "referenced_documents", new KeywordProperty() },
+            { "date", new KeywordProperty() },
+            { "datetime", new DateProperty() },
+            { "pages", new IntegerNumberProperty() },
+            { "has_fulltext", new BooleanProperty() },
+            { "fulltext", new TextProperty
               {
                 Analyzer = "german_custom",
-                SearchAnalyzer = "german_custom",
-                Fields = new Properties
-                {
-                  { "icu", new IcuCollationProperty
-                    {
-                      Language = "de",
-                      Country = "DE",
-                      Strength = IcuCollationStrength.Primary,
-                      Alternate = IcuCollationAlternate.NonIgnorable,
-                      CaseFirst = IcuCollationCaseFirst.Upper,
-                    }
-                  }
-                }
+                SearchAnalyzer = "german_custom"
               }
-            },
-            { "url", new KeywordProperty() },
-            { "dic", new KeywordProperty() }
+            }
           }
         }
       });
       create.Wait();
     }
 
-    private static void ProcessCompany()
+    private static void ProcessCompany(IEnumerable<Document> docs)
     {
-      var data = ReadCsv<Company>("data/list_company.tsv");
+      var data = ReadCsv<Company>("data/list_company.tsv").ToArray();
 
-      
+      for (var i = 0; i < data.Length; i++)
+      {
+        var name = data[i].Name;
+        data[i].Documents = (from d in docs where d.ReferencedCompanies.Any(x => x == name) select d.Id).ToArray();
+      }
+
+      _client.IndexMany(data, $"{_indexName}_company");
     }
 
-    private class Person
+    private static void ProcessPerson(IEnumerable<Document> docs)
     {
-      [Name("Person")]
-      [JsonPropertyName("id")]
-      public string Id { get; set; }
+      var data = ReadCsv<Person>("data/list_persons.tsv").ToArray();
 
-      [Name("Stadt")]
-      [JsonPropertyName("city")]
-      public string City { get; set; }
+      for (var i = 0; i < data.Length; i++)
+      {
+        var name = data[i].Id;
+        data[i].DocsAuthor = (from d in docs where d.PersonsAuthor.Any(x => x == name) select d.Id).ToArray();
+        data[i].DocsRecipient = (from d in docs where d.PersonRecipients.Any(x => x == name) select d.Id).ToArray();
+        data[i].DocsReferenced = (from d in docs where d.PersonsReferenced.Any(x => x == name) select d.Id).ToArray();
+      }
 
-      [Name("Stadt (Ländercode)")]
-      [JsonPropertyName("country")]
-      public string Country { get; set; }
+      _client.IndexMany(data, $"{_indexName}_person");
     }
 
-    private class Company
+    private static void ProcessDocument(Document[] docs)
     {
-      [Name("Institution")]
-      [JsonPropertyName("name")]
-      public string Name { get; set; }
+      var basePath = "I:/IDS - Gründungsgeschichte/Simple";
 
-      [Name("Stadt")]
-      [JsonPropertyName("city")]
-      public string City { get; set; }
+      for (var i = 0; i < docs.Length; i++)
+      {
+        try
+        {
+          if (!docs[i].HasFulltext)
+            continue;
 
-      [Name("Stadt (Ländercode)")]
-      [JsonPropertyName("country")]
-      public string Country { get; set; }
+          var path = $"{basePath}/{docs[i].Id}.txt";
+          docs[i].Fulltext = File.ReadAllText(path, Encoding.UTF8);
+        }
+        catch
+        {
+          // ignore
+        }
+      }
+
+      _client.IndexMany(docs, $"{_indexName}_doc");
     }
 
-    private static IEnumerable<T> ReadCsv<T>(string path)
+    private static T[] ReadCsv<T>(string path)
     {
       var config = new CsvConfiguration(CultureInfo.InvariantCulture)
       {
-        HasHeaderRecord = false,
+        HasHeaderRecord = true,
+        Delimiter = "\t",
+        NewLine = "\r\n"
       };
       using (var reader = new StreamReader(path))
       using (var csv = new CsvReader(reader, config))
-        return csv.GetRecords<T>();
+        return csv.GetRecords<T>().ToArray();
     }
   }
 }
+
