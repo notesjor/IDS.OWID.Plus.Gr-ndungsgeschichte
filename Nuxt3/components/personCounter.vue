@@ -1,20 +1,49 @@
 <template>
   <v-row style="margin:2px">
-    <v-chip prepend-icon="mdi-email-fast-outline" style="margin:0px 1px;" variant="outlined" v-if="this.number_authors > 0">
-      {{ number_authors }}
-    </v-chip>
-    <v-chip prepend-icon="mdi-email-newsletter" style="margin:0px 1px" variant="outlined" v-if="this.number_recipients > 0">
-      {{ number_recipients }}
-    </v-chip>
-    <v-chip prepend-icon="mdi-comment-account-outline" style="margin:0px 1px" variant="outlined" v-if="this.number_referenced > 0">
-      {{ number_referenced }}
-    </v-chip>
-    <v-chip prepend-icon="mdi-domain" style="margin:0px 1px" variant="outlined" v-if="this.number_referenced > 0">
-      {{ number_referenced }}
-    </v-chip>
-    <v-chip prepend-icon="mdi-link-box-variant-outline" style="margin:0px 1px" variant="outlined" v-if="this.number_referenced > 0">
-      {{ number_referenced }}
-    </v-chip>
+    <v-tooltip text="Anzahl Verfasser*innen" location="top">
+      <template v-slot:activator="{ props }">
+        <v-chip v-bind="props" prepend-icon="mdi-email-fast-outline" style="margin:0px 1px;" variant="text"
+          v-if="this.number_authors > 0">
+          {{ number_authors }}
+        </v-chip>
+      </template>
+    </v-tooltip>
+
+    <v-tooltip text="Anzahl Adressat*innen" location="top">
+      <template v-slot:activator="{ props }">
+        <v-chip v-bind="props" prepend-icon="mdi-email-newsletter" style="margin:0px 1px" variant="text"
+          v-if="this.number_recipients > 0">
+          {{ number_recipients }}
+        </v-chip>
+      </template>
+    </v-tooltip>
+
+    <v-tooltip text="Anzahl sonstiger refernzierter Personen" location="top">
+      <template v-slot:activator="{ props }">
+        <v-chip v-bind="props" prepend-icon="mdi-comment-account-outline" style="margin:0px 1px" variant="text"
+          v-if="this.number_referenced > 0">
+          {{ number_referenced }}
+        </v-chip>
+      </template>
+    </v-tooltip>
+
+    <v-tooltip text="Anzahl referenzierter Institutionen" location="top">
+      <template v-slot:activator="{ props }">
+        <v-chip v-bind="props" prepend-icon="mdi-domain" style="margin:0px 1px" variant="text"
+          v-if="this.number_referenced > 0">
+          {{ number_companys }}
+        </v-chip>
+      </template>
+    </v-tooltip>
+
+    <v-tooltip text="Anzahl referenzierter Dokumente" location="top">
+      <template v-slot:activator="{ props }">
+        <v-chip v-bind="props" prepend-icon="mdi-link-box-variant-outline" style="margin:0px 1px" variant="text"
+          v-if="this.number_referenced > 0">
+          {{ number_documents }}
+        </v-chip>
+      </template>
+    </v-tooltip>
   </v-row>
 
   <!-- <v-dialog max-width="800" v-model="dialog">
