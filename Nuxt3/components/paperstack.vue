@@ -1,18 +1,31 @@
 <template>
-  <v-card style="max-width: 250px; max-height: 455px;" @click="dialog = true">
+  <v-card style="max-width: 300px; max-height: 455px;" @click="dialog = true">
     <v-card-text>
       <v-row>
         <div style="margin-right: auto;">
           <v-chip prepend-icon="mdi-calendar-range">
-            {{ year }}
+            {{ source.date }}
           </v-chip>
         </div>
         <div style="margin-left: auto;">
-          <v-chip prepend-icon="mdi-shape-outline">
-            {{ category }}
+          <v-chip prepend-icon="mdi-file-cabinet">
+            {{ source.id.replace("_", "/").replace("_", "/") }}
           </v-chip>
         </div>
       </v-row>
+      <v-row style="margin-top:13px">
+        <div style="margin-right: auto;">
+          <v-chip prepend-icon="mdi-shape-outline">
+            {{ source.text_type }}
+          </v-chip>
+        </div>
+        <div style="margin-left: auto;">
+          <v-chip prepend-icon="mdi-book-open-page-variant-outline">
+            {{ source.pages }}
+          </v-chip>
+        </div>
+      </v-row>
+      <!--
       <v-row>
         <div style="margin-left: auto; margin-right: auto;">
           <img :src="src" alt="Bild auf oberstem Blatt" v-if="src != ''"
@@ -20,27 +33,21 @@
           <v-icon v-else style="min-height: 200px; font-size: 128px;">mdi-note-text-outline</v-icon>
         </div>
       </v-row>
+    -->
       <v-row>
-        <div style="margin-right: auto;">
-          <v-chip prepend-icon="mdi-account-question">
-            {{ author }}
-          </v-chip>
-        </div>
-        <div style="margin-left: auto;">
-          <v-chip prepend-icon="mdi-book-open-page-variant-outline">
-            {{ pages }}
-          </v-chip>
+        <div style="width: 100%; text-align: center; font-weight: 200; font-size: 1.1rem; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+          {{ source.title }}
         </div>
       </v-row>
       <v-row>
-        <div
-          style="width: 100%; text-align: center; font-weight: 200; font-size: 1.1rem; margin-top: 0.5rem; margin-bottom: 0.5rem;">
-          {{ titel }}
-        </div>
+        <div style="margin-right: auto; margin-left:auto">
+          <personCounter :source="source"/>
+        </div>        
       </v-row>
+
     </v-card-text>
   </v-card>
-
+  <!--
   <v-dialog max-width="800" v-model="dialog">
     <v-card title="Dialog">
       <v-card-text>
@@ -71,35 +78,16 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+-->
 </template>
 
 <script>
 export default {
   name: 'StackedPaperImage',
   props: {
-    src: {
-      type: String,
-      default: ''
-    },
-    category: {
-      type: String,
-      default: 'unkategorisiert'
-    },
-    year: {
-      type: Number,
-      default: '???'
-    },
-    pages: {
-      type: Number,
-      default: 1
-    },
-    author: {
-      type: String,
-      default: 'unbekannt'
-    },
-    titel: {
-      type: String,
-      default: 'Ohne Titel'
+    source: {
+      type: Object,
+      default: {}
     },
   },
   data() {

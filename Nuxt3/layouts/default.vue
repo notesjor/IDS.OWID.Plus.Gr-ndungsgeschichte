@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app theme="dark" class="d-print-none" style="z-index:999">
+    <v-app-bar app theme="dark" class="d-print-none" style="z-index: 99999999">
       <div>
         <a :href="leftIconHref" target="_blank">
           <img alt="Logo" src="/logo_left.svg" style="min-height:40px; margin-left:10px" />
@@ -14,13 +14,23 @@
           <img alt="Logo" src="/logo_right.svg" style="min-height:70px" />
         </a>
       </div>
-    </v-app-bar>
+    </v-app-bar>   
+
+    <v-navigation-drawer expand-on-hover permanent rail>
+      <v-list>
+      <v-list-item href="/" title="Übersicht" prepend-icon="mdi-home"></v-list-item>
+      <v-list-item href="/search" title="Findebuch" prepend-icon="mdi-text-box-search-outline"></v-list-item>
+      <v-list-item href="/browse" title="Verzeichnis" prepend-icon="mdi-file-cabinet"></v-list-item>
+      <v-list-item href="/team" title="Projektteam" prepend-icon="mdi-account-group-outline"></v-list-item>      
+      </v-list>
+    </v-navigation-drawer>
+
     <v-main style="margin-bottom: 100px;">
       <slot />
     </v-main>
 
     <v-footer theme="dark"
-      style="z-index: 100; max-height: 80px; position: absolute; bottom: 0; width: 100%; padding-left:25px; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 100%; gap: 0px 0px; grid-template-areas: 'left middle right';">
+      style="z-index: 99999999; max-height: 80px; position: absolute; bottom: 0; width: 100%; padding-left:25px; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 100%; gap: 0px 0px; grid-template-areas: 'left middle right';">
       <div style="color:white; grid-area: left; margin-top: 20px; font-size: 12px;" v-if="!useMobileView">
         <img alt="Logo" src="/owid-logo-dunkel.svg" style="max-height:15px; margin:-10px 0px 3px 0px" float="left" />
         <div>
@@ -43,7 +53,7 @@
             style="max-height:65px; min-height: 45px; min-width: 200px; margin-left: auto; " />
         </a>
       </div>
-    </v-footer>
+    </v-footer>    
   </v-app>
 </template>
 
