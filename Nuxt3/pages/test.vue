@@ -18,7 +18,10 @@
         <v-col cols="3">
           <img :src="`thumbnail/${dialogData.id}.jpg`" alt="Bild auf oberstem Blatt"
             style="max-height: 300px; max-width: 480px; margin-left:auto; margin-right: auto;" />
-          <v-btn prepend-icon="mdi-download-circle-outline" style="margin:5px 0px">Download</v-btn>
+          <v-btn prepend-icon="mdi-download-circle-outline" style="margin:5px 0px"
+            v-if="dialogData.has_fulltext"
+            :href="`fulltext/${dialogData.id}.pdf`">
+            Download</v-btn>
         </v-col>
         <v-col cols="1"></v-col>
         <v-col cols="8">
@@ -37,7 +40,7 @@
               <span>(Anzahl: {{ dialogData.persons_author?.length }})</span>
             </v-expansion-panel-title>
             <v-expansion-panel-text>
-
+              <personList :data="dialogData.persons_author"/>
             </v-expansion-panel-text>
           </v-expansion-panel>
           <v-expansion-panel v-if="dialogData.persons_recipient?.length > 0">
@@ -47,7 +50,7 @@
               <span>(Anzahl: {{ dialogData.persons_recipient?.length }})</span>
             </v-expansion-panel-title>
             <v-expansion-panel-text>
-
+              <personList :data="dialogData.persons_recipient"/>
             </v-expansion-panel-text>
           </v-expansion-panel>
           <v-expansion-panel v-if="dialogData.persons_referenced?.length > 0">
@@ -57,7 +60,7 @@
               <span>(Anzahl: {{ dialogData.persons_referenced?.length }})</span>
             </v-expansion-panel-title>
             <v-expansion-panel-text>
-
+              <personList :data="dialogData.persons_referenced"/>
             </v-expansion-panel-text>
           </v-expansion-panel>
           <v-expansion-panel v-if="dialogData.referenced_companies?.length > 0">
@@ -67,7 +70,7 @@
               <span>(Anzahl: {{ dialogData.referenced_companies?.length }})</span>
             </v-expansion-panel-title>
             <v-expansion-panel-text>
-
+              <companyList :data="dialogData.referenced_companies"/>
             </v-expansion-panel-text>
           </v-expansion-panel>
           <v-expansion-panel v-if="dialogData.referenced_documents?.length > 0">
@@ -77,23 +80,11 @@
               <span>(Anzahl: {{ dialogData.referenced_documents?.length }})</span>
             </v-expansion-panel-title>
             <v-expansion-panel-text>
-
+              <documentList :data="dialogData.referenced_documents"/>
             </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>
       </v-row>
-
-      <div>
-
-        <br />
-        <br />
-        <i>Kategorie:</i> {{ category }}<br />
-        <i>Jahr:</i> {{ year }}<br />
-        <i>Seitenanzahl:</i> {{ pages }}<br />
-        <i>Titel:</i> {{ dialogData.titel }}<br /><br />
-
-        <i>Autor:</i> {{ author }}<br />
-      </div>
     </v-card-text>
 
     <v-card-actions>

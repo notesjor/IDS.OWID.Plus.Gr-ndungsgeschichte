@@ -31,7 +31,7 @@
 
     <v-footer theme="dark"
       style="z-index: 99999999; max-height: 80px; position: absolute; bottom: 0; width: 100%; padding-left:25px; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 100%; gap: 0px 0px; grid-template-areas: 'left middle right';">
-      <div style="color:white; grid-area: left; margin-top: 20px; font-size: 12px;" v-if="!useMobileView">
+      <div style="color:white; grid-area: left; margin-top: 20px; font-size: 12px;">
         <img alt="Logo" src="/owid-logo-dunkel.svg" style="max-height:15px; margin:-10px 0px 3px 0px" float="left" />
         <div>
           <a style="color: #fff" :href="footerContact">Kontakt</a>
