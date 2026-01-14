@@ -1,3 +1,5 @@
+import FlexSearch from "flexsearch";
+
 export class BaseMapping {
   constructor(property, options = {}) {
     this.property = property;
@@ -148,6 +150,79 @@ export class DictMapping extends BaseMapping {
 }
 
 /* =====================
+   FULLTEXT (Volltext-Index mit flexsearch)
+   ===================== */
+export class FulltextMapping extends BaseMapping {
+  constructor(property, options = {}) {
+    super(property, options);
+
+    // Key-Property selbst vergeben
+    this.keyProperty = options.key;
+    if (!this.keyProperty) {
+      throw new Error("FulltextMapping requires 'key' option");
+    }
+
+    // FlexSearch Index im Document-Modus
+    this.index = new FlexSearch.Document({
+      encode: options.encode || "advanced",
+      tokenize: options.tokenize || "forward",
+      language: "de",
+      doc: {
+        id: this.keyProperty, // wir verwenden das selbstgewählte Key-Feld als ID
+        field: [property], // nur das gegebene Property wird indiziert
+      },
+      cache: true,
+    });
+
+    // interne Map, falls wir zusätzliche Infos brauchen
+    this.itemsMap = new Map();
+  }
+
+  // Item zum Index hinzufügen
+  collect(item) {
+    var value = item[this.property];
+    if (!value) return;
+
+    var key = item[this.keyProperty];
+    if (!key) return;
+
+    // In interne Map speichern
+    this.itemsMap.set(key, item);
+
+    // FlexSearch Index
+    this.index.add(item);
+  }
+
+  // Prüfen, ob ein Item zum Query passt
+  matches(item, queryValue) {
+    if (!queryValue || !queryValue.trim()) return true;
+
+    var key = item[this.keyProperty];
+    var results = this.index.search(queryValue, { field: this.property });
+
+    // results ist ein Array von Arrays pro Feld → prüfen, ob Key enthalten ist
+    return results.some(function (r) {
+      return r.result.includes(key);
+    });
+  }
+
+  // Alle Treffer zurückgeben
+  search(queryValue) {
+    if (!queryValue || !queryValue.trim())
+      return Array.from(this.itemsMap.values());
+
+    var results = this.index.search(queryValue, { field: this.property });
+    // alle Keys zusammenführen
+    var keys = results.flatMap(function (r) {
+      return r.result;
+    });
+
+    // Map → Items
+    return keys.map((k) => this.itemsMap.get(k));
+  }
+}
+
+/* =====================
    LOCAL SEARCH
    ===================== */
 export class LocalSearch {
@@ -188,6 +263,11 @@ export class LocalSearch {
 
         case "dict":
           instance = new DictMapping(prop, config);
+          this.list[prop] = {};
+          break;
+        
+        case "fulltext":
+          instance = new FulltextMapping(prop, config);
           this.list[prop] = {};
           break;
 
