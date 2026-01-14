@@ -1,4 +1,5 @@
 <template>
+  <projectHeader/>
   <div style="max-width: 80ch; margin-left: auto; margin-right: auto;">
     <h1>Beteiligte Personen und Projekte</h1>
     <div>

@@ -21,6 +21,7 @@
       <v-list-item href="/" title="Übersicht" prepend-icon="mdi-home"></v-list-item>
       <v-list-item href="/search" title="Findebuch" prepend-icon="mdi-text-box-search-outline"></v-list-item>
       <v-list-item href="/browse" title="Verzeichnis" prepend-icon="mdi-file-cabinet"></v-list-item>
+      <v-list-item href="/data" title="Daten" prepend-icon="mdi-download"></v-list-item>   
       <v-list-item href="/team" title="Projektteam" prepend-icon="mdi-account-group-outline"></v-list-item>      
       </v-list>
     </v-navigation-drawer>
