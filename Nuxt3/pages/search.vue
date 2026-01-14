@@ -1,5 +1,5 @@
 <template>
-  <projectHeader/>
+  <projectHeader />
   <v-row>
     <v-col style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 2rem;">
       Kurzbeschreibung: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita reiciendis beatae velit quod
@@ -97,13 +97,14 @@
         <div>
           <img :src="src" alt="Bild auf oberstem Blatt"
             style="max-height: 400px; max-width: 480px; padding: 10px; float: left;" />
-          <i>Regal:</i> {{ dialogData.archive_rack }} / <i>Ordner:</i> {{ dialogData.archive_folder }} / <i>Ordner-Name:</i> {{ dialogData.archive_folder_name }}<br />
+          <i>Regal:</i> {{ dialogData.archive_rack }} / <i>Ordner:</i> {{ dialogData.archive_folder }} /
+          <i>Ordner-Name:</i> {{ dialogData.archive_folder_name }}<br />
           <i>Dokument-Nr. im Ordner:</i> {{ dialogData.archive_document }}<br />
           <i>Text-Typ:</i> {{ dialogData.text_type }}<br />
           <br />
           <i>Kategorie:</i> {{ category }}<br />
           <i>Jahr:</i> {{ year }}<br />
-          <i>Seitenanzahl:</i> {{ pages }}<br />          
+          <i>Seitenanzahl:</i> {{ pages }}<br />
           <i>Titel:</i> {{ dialogData.titel }}<br /><br />
           <i>Inhalts-Schlagwörter:</i><br />
           <div>
@@ -124,10 +125,13 @@
 
 <script>
 import esQuick from "../api/esQuick.js";
+import { useSearchStore } from '~/stores/search';
 
 export default {
   data() {
     return {
+      search: null,
+
       esQuick: null,
       esQuery: "*",
       esPageCurrent: 0,
@@ -154,14 +158,22 @@ export default {
     this.appName = this.$config.public.appName;
     this.appDescription = this.$config.public.appDescription;
 
-    this.esQuick = new esQuick();
-    this.esQuick.initialize("http://localhost:9200", "gruendungsgeschichte_doc");
+    this.search = useSearchStore();
+    console.log(this.search)
+    this.search.initialize();
+    console.log(this.search)
+    //this.esQuick = new esQuick();
+    //this.esQuick.initialize("http://localhost:9200", "gruendungsgeschichte_doc");
     this.refresh();
   },
 
   methods: {
     refresh() {
       var self = this;
+
+      this.esResults = self.search.getCurrentData().hits.hits;
+
+      /*
       this.esQuick.easySearch(this.esQuery, this.esPageCurrent, this.esPageSize, (json) => {
         self.esPageMax = self.esQuick.easySearchGetMax(json);
         self.esResults = self.esQuick.easySearchGetHits(json);
@@ -174,10 +186,11 @@ export default {
           }
         });
       });
+      */
     },
-    showItemDialog(id){
+    showItemDialog(id) {
       var self = this;
-      this.esQuick.getDocumentById(id, (json)=>{
+      this.esQuick.getDocumentById(id, (json) => {
         self.dialogData = json._source;
         self.dialog = true;
       });

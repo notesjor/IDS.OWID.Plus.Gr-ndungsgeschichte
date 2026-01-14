@@ -6,7 +6,7 @@
           <v-tooltip text="Jahr (Erstellung)" location="top">
             <template v-slot:activator="{ props }">
               <v-chip v-bind="props" prepend-icon="mdi-calendar-range" variant="text">
-                {{ source.date }}
+                {{ source.date.substring(0, 4) }}
               </v-chip>
             </template>
           </v-tooltip>
@@ -44,7 +44,7 @@
       <v-row>
         <div style="margin-left: auto; margin-right: auto;">
           <img :src="`thumbnail/${source.id}.jpg`" alt="Aktenstapel - Symbolbild" v-if="source.has_fulltext"
-            style="min-height: 200px; max-height: 200px; max-width: 280px; padding: 10px;" />
+            style="min-height: 200px; max-height: 200px; max-width: 280px; padding: 10px;" loading="lazy" />
           <v-icon v-else style="min-height: 200px; font-size: 128px;">mdi-note-text-outline</v-icon>
         </div>
       </v-row>

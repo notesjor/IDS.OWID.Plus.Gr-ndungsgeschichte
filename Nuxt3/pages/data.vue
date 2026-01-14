@@ -7,8 +7,9 @@
         Zuge
         des Digitalisierungsprojekts erfasst wurden. Durch den Einsatz von Optical Character Recognition (OCR) konnten
         die
-        historischen Dokumente digitalisiert und für die Forschung zugänglich gemacht werden. Dabei traten typische
+        historischen Dokumente digitalisiert und zugänglich gemacht werden. Dabei traten typische
         OCR-Fehler auf, wie falsch erkannte Buchstaben und Zeichen, diese wurden manuell nicht nachkorrigiert.
+        Die Digitalisate wurden manuell gesichtet und mit Meta-Daten annotiert. 
       </v-col>
     </v-row>
     <v-row>
@@ -103,7 +104,7 @@ export default {
         { name: 'TSV-Liste digitalisierter Dokumente', size: '126', unit: 'KB', url: 'data/list_documents.tsv', desc: 'Diese Liste ist die Datengrundlage für die Funktion: "Findebuch"' },
         { name: 'Digitalisate (PDF-Scans)', size: '301', unit: 'MB', url: 'data/Digitalisate_PDF.zip', desc: 'PDF-Dokumente der digitalisierten Dokumente - nur Bilddaten' },
         { name: 'Digitalisate (TXT-Dateien)', size: '522', unit: 'KB', url: 'data/Digitalisate_TXT.zip', desc: 'OCR-Erkannter Plaintext (Leptonica / Tesseract OCR) - Rohtext' },
-        { name: 'Korpus (verschiedene Formate)', size: '10', unit: 'MB', url: 'data/KorpusDaten.zip', desc: 'Korpusdaten in den Formaten: I5, KorAP, CorpusExplorer, CoNLL, TCF, CWB, VRT, TreeTagger, TXM, WebLicht' }
+        { name: 'Korpus (verschiedene Formate)', size: '13', unit: 'MB', url: 'data/KorpusDaten.zip', desc: 'Korpusdaten in den Formaten: I5, KorAP, CorpusExplorer, CoNLL, TCF, CWB, SketchEngine, TreeTagger, WebLicht, R' }
       ],
     }
   },
