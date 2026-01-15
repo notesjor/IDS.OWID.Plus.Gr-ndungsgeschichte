@@ -226,6 +226,9 @@ export class FulltextMapping extends BaseMapping {
    LOCAL SEARCH
    ===================== */
 export class LocalSearch {
+  list;
+  query;
+
   constructor({ data = [], mapping = {} }) {
     this.data = data;
     this.mappings = {};
