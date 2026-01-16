@@ -1,13 +1,18 @@
 <template>
   <span>{{ k }}</span>:&nbsp;
-  <span @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon>
-  <span>{{ v }}</span></span>
+
+  <v-tooltip text="Dokumente mit Bezug zu diesem Schlagwort" location="top">
+    <template v-slot:activator="{ props }">
+      <span v-bind="props" @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon>
+        <span>{{ v }}</span></span>
+    </template>
+  </v-tooltip>
 </template>
 
 <script>
 export default {
-  props:{
-    k:{
+  props: {
+    k: {
       type: String,
     },
     v: {
@@ -16,7 +21,7 @@ export default {
   },
 
   methods: {
-    search(){
+    search() {
 
     }
   },

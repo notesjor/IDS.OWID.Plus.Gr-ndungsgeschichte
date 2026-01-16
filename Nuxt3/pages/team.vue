@@ -1,105 +1,58 @@
 <template>
   <projectHeader/>
   <div style="max-width: 80ch; margin-left: auto; margin-right: auto;">
-    <h1>Beteiligte Personen und Projekte</h1>
-    <div>
-        <h2>Entwicklungsteam für das <hi>Syntagmatikon</hi>
-        </h2>
+    <p style="margin-top:20px">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto facere nulla nam ducimus sed sint porro, aut voluptatem labore quo dignissimos officiis pariatur veniam facilis expedita doloribus eos temporibus dolorem?
+    </p>
+    <div style="margin-top:10px">
+        <h3>Projektteam</h3>
         <v-list>
             <v-list-item>
-                <NuxtLink to="https://www.ids-mannheim.de/lexik/personal/steyer">Dr. Kathrin Steyer</NuxtLink>
+                <div>
+                    <a href="https://www.ids-mannheim.de/personal/seiten/scholl.html">Stefan Scholl</a>
+                </div>                
+                <div style="font-weight: 200; font-size: 0.9rem; margin-left: 20px;">
+                    Projektleitung, Koordination, Auswertung und Analyse der Daten
+                </div>
             </v-list-item>
             <v-list-item>
-                <NuxtLink to="https://perso.ids-mannheim.de/seiten/brunner.html">Dr. Annelen Brunner</NuxtLink>
+                <div>
+                    <a href="https://www.ids-mannheim.de/personal/seiten/dang.html">Mark Dang-Anh</a>
+                </div>                
+                <div style="font-weight: 200; font-size: 0.9rem; margin-left: 20px;">
+                    Projektmitarbeit, Auswertung und Analyse der Daten
+                </div>
             </v-list-item>
             <v-list-item>
-                <NuxtLink to="https://perso.ids-mannheim.de/seiten/ruediger.html">Dr. Jan Oliver Rüdiger</NuxtLink>
+                <div>
+                    <a href="https://www.ids-mannheim.de/personal/seiten/mueller_carolin.html">Carolin Müller-Spitzer</a>
+                </div>                
+                <div style="font-weight: 200; font-size: 0.9rem; margin-left: 20px;">
+                    Projektmitarbeit, Auswertung und Analyse der Daten
+                </div>
             </v-list-item>
-        </v-list>
-        <div>Logo-Design von Tom Steyer <NuxtLink to="https://erit-lux.events">https://erit-lux.events
-            </NuxtLink>
-        </div>
-
-        <h2>Informationen zu den integrierten Ressourcen</h2>
-        <h3>Verantwortliche Personen</h3>
-
-        <v-row class="d-flex align-center">
-            <v-col cols=""> <resources-list-compact
-                    :filter="['PREPCON', 'SpruchList', 'SPRW', 'WVBF', 'FesteWV', 'DTWW']" /></v-col>
-            <v-col cols="6">
-                <NuxtLink to="https://www.ids-mannheim.de/lexik/personal/steyer">Dr. Kathrin Steyer</NuxtLink>
-            </v-col>
-
-        </v-row>
-        <v-row class="d-flex align-center">
-            <v-col><resources-list-compact :filter="['KoMuX', 'PhrasKomp']" /></v-col>
-            <v-col cols="6">
-                <NuxtLink to="https://perso.ids-mannheim.de/seiten/hein.html">Dr. Katrin Hein-Antonioli</NuxtLink>
-            </v-col>
-
-        </v-row>
-
-        <v-row class="d-flex align-center">
-            <v-col>
-                <r rkey="MAP" />
-            </v-col>
-            <v-col cols="6">
-                <NuxtLink to="https://perso.ids-mannheim.de/seiten/proost.html">Dr. Kristel Proost</NuxtLink><br />
-                <NuxtLink to="https://perso.ids-mannheim.de/seiten/zeschel.html">Dr. Arne Zeschel</NuxtLink>
-            </v-col>
-
-        </v-row>
-
-        <v-row class="d-flex align-center">
-            <v-col>
-                <r rkey="Verlaufsformen" />
-            </v-col>
-            <v-col cols="6">
-                <NuxtLink to="https://www.ids-mannheim.de/lexik/personal/engelberg">Prof. Dr. Stefan Engelberg
-                </NuxtLink>
-            </v-col>
-
-        </v-row>
-        <v-row class="d-flex align-center">
-            <v-col>
-                <r rkey="Redeeinleiter" />
-            </v-col>
-            <v-col cols="6">
-                <NuxtLink to="https://perso.ids-mannheim.de/seiten/tu.html">Dr. Ngoc Duyen Tanja Tu</NuxtLink><br />
-                <NuxtLink to="https://perso.ids-mannheim.de/seiten/brunner.html">Dr. Annelen Brunner</NuxtLink>
-            </v-col>
-
-        </v-row>
-
-        <h3>Projekte und Arbeitsbereiche</h3>
-
-        <p>Informationen zu den Projekten und Arbeitsbereichen, in am <hi>Syntagmatikon</hi> beteiligt sind, finden Sie auf folgenden Webseiten:</p>
-        <!-- <p style="border-top: solid #C0C0C0 1px; padding-top: 10px"> -->
-        <p style="padding-top: 10px">
-            <NuxtLink to="https://www.ids-mannheim.de/lexik/syntagmatik-im-lexikon/">Projekt „Syntagmatik im
-                Lexikon“</NuxtLink>
-        </p>
-        <p style="margin-left:40px">
-            <NuxtLink to="https://www.ids-mannheim.de/lexik/uwv/">Usuelle Wortverbindungen</NuxtLink>
-        </p>
-        <p style="margin-left:40px">
-            <NuxtLink to="https://www.ids-mannheim.de/lexik/verben-und-argumentstrukturen/">Argumentstrukturen
-            </NuxtLink>
-        </p>
-        <p style="margin-left:40px">
-            <NuxtLink to="https://www.ids-mannheim.de/lexik/syntagmatik-im-lexikon/wortbildungsmuster/">
-                Wortbildungsmuster </NuxtLink>
-        </p>
-        <p style="padding-top: 10px">
-            <NuxtLink
-                to="https://www.ids-mannheim.de/lexik/pb-lexik-empirisch-digital/lexikologische-informationssysteme/">
-                Projekt „Lexikologische Informationssysteme“</NuxtLink>
-        </p>
-        <p style="padding-top: 10px">
-            <NuxtLink to="https://www.ids-mannheim.de/lexik/redewiedergabe/">Projekt „Redewiedergabe“</NuxtLink>
-            (abgeschlossen)
-        </p>
+            <v-list-item>
+                <div>
+                    <a href="https://www.ids-mannheim.de/lexik/personal/">Lea Waßmer</a>
+                </div>                
+                <div style="font-weight: 200; font-size: 0.9rem; margin-left: 20px;">
+                    Wissenschaftliche Hilfskraft, Digitalisierung, Erhebung und Aufbereitung der Daten
+                </div>
+            </v-list-item>
+            <v-list-item>
+                <div>
+                    <a href="https://perso.ids-mannheim.de/seiten/ruediger.html">Jan Oliver Rüdiger</a>
+                </div>                
+                <div style="font-weight: 200; font-size: 0.9rem; margin-left: 20px;">
+                    Datenaufbereitung und Softwareentwicklung
+                </div>
+            </v-list-item>
+        </v-list>    
     </div>
+    <p style="margin-top:30px">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto facere nulla nam ducimus sed sint porro, aut voluptatem labore quo dignissimos officiis pariatur veniam facilis expedita doloribus eos temporibus dolorem?
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad itaque amet, eos officia ducimus sint nobis ea perferendis consequatur ab. Ut natus placeat quibusdam! Nobis temporibus sed nostrum amet blanditiis?
+    </p>
   </div>
 </template>
 
@@ -126,4 +79,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+a {
+  text-decoration: none;
+  border-bottom: 1px dotted #000;
+  background-color: white;
+}
+
+a:hover {
+  text-decoration: none;
+  border-bottom: 1px dotted #000;
+  background-color: rgb(229, 231, 235);
+}
+</style>

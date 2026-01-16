@@ -51,6 +51,9 @@ export const useSearchStore = defineStore("search", {
     },
     getPersonById(id){
       return this.initialize ? this.persons[id] : {};
+    },
+    getCompanyById(id){
+      return this.initialize ? this.companies[id] : {};
     }
   },
 

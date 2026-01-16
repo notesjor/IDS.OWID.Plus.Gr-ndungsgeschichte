@@ -1,15 +1,19 @@
 <template>
   <div style="padding-bottom: 5px;">
     <div>
-      <span>{{ k }} (<i>{{ person.year_birth }}-{{ person.year_death }}</i>)</span>:&nbsp;
-      <span @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon>
-        <span>{{ v }}</span></span>
+      <span>{{ k }} (<i>{{ info.year_birth }}-{{ info.year_death }}</i>)</span>:&nbsp;
+      <v-tooltip text="Dokumente mit Bezug zu dieser Person" location="top">
+        <template v-slot:activator="{ props }">
+          <span v-bind="props" @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon>
+            <span>{{ v }}</span>
+          </span>
+        </template>
+      </v-tooltip>
     </div>
     <div style="font-weight: 200;">
-      {{ person.info }}
+      {{ info.info }}
       <span style="margin:-5px 0px 0px -5px">
-        <a :href="person.wiki_url"
-          v-if="person.wiki_url != undefined && person.wiki_url != null && person.wiki_url.length > 0"
+        <a :href="info.wiki_url" v-if="info.wiki_url != undefined && info.wiki_url != null && info.wiki_url.length > 0"
           style="margin:0px 0px 0px 5px" target="_blank">
           <v-tooltip text="Personen-Eintrag in Wikidata öffnen" location="top">
             <template v-slot:activator="{ props }">
@@ -18,8 +22,7 @@
             </template>
           </v-tooltip>
         </a>
-        <a :href="person.gnd_url"
-          v-if="person.gnd_url != undefined && person.gnd_url != null && person.gnd_url.length > 0"
+        <a :href="info.gnd_url" v-if="info.gnd_url != undefined && info.gnd_url != null && info.gnd_url.length > 0"
           style="margin:0px 0px 0px 5px" target="_blank">
           <v-tooltip text="Personen-Eintrag in der GND öffnen" location="top">
             <template v-slot:activator="{ props }">
@@ -47,14 +50,23 @@ export default {
   },
   data() {
     return {
-      person: {}
+      info: {}
     }
   },
   mounted() {
     var search = useSearchStore();
     search.initialize();
-    this.person = search.getPersonById(this.k);
-    console.log(this.person)
+    if (search.getPersonById(this.k) == undefined)
+      this.info = {
+        year_birth: "",
+        year_death: "",
+        info: ""
+      }
+    else
+      this.info = search.getPersonById(this.k);
+
+    if (this.info.info == "")
+      this.info.info = "Zur Person konnten keine Informationen ermittelt werden.";
   },
 
   methods: {
