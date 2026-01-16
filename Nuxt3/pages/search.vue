@@ -138,7 +138,6 @@
 </template>
 
 <script>
-//import esQuick from "../api/esQuick.js";
 import { useSearchStore } from '~/stores/search';
 
 export default {

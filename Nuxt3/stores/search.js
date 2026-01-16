@@ -50,7 +50,6 @@ export const useSearchStore = defineStore("search", {
       return this.initialize ? this.all[id] : {};
     },
     getPersonById(id){
-      console.log(this.persons);
       return this.initialize ? this.persons[id] : {};
     }
   },
