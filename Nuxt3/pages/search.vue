@@ -2,21 +2,40 @@
   <projectHeader />
   <v-row>
     <v-col style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 2rem;">
-      Kurzbeschreibung: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita reiciendis beatae velit quod
-      tempora magni corrupti unde alias, excepturi nulla maxime atque, cum neque quibusdam minus amet eveniet
-      repellendus deleniti?
+      Das Findebuch umfasst alle Texte des IDS-Vorstandsarchivs der Jahre 1963–1970. Auf der linken Seite finden Sie
+      verschiedene Facetten, über die Sie gezielt suchen können. Jeder gefundene Eintrag verweist auf wichtige Metriken
+      wie Datum, Texttyp, Sigle oder Seitenanzahl. Unten in der Fußleiste jedes Eintrags sehen Sie außerdem, wie viele
+      Personen oder Institutionen mit dem jeweiligen Text verknüpft sind.
+      <br />
+      Texte, die Bilder enthalten, sind als Volltext verfügbar. Die computergenerierten Bilder der Textstapel vermitteln
+      zudem einen Eindruck davon, wie viele Seiten ein Dokument umfasst. Durch einen Klick auf einen Text erhalten Sie
+      zusätzliche Detailinformationen und können auch über diese Detailinformationen gezielt suchen.
     </v-col>
   </v-row>
   <v-row>
     <v-col cols="3" style="padding: 0px 30px 0px 20px;">
       <v-expansion-panels v-model="panels" multiple>
-        <!--<searchBox title="xyz" rkey="xyz" :items="search?.localSearch?.list?.archive_rack" />-->
+        <searchBox title="Regal-Nummer" rkey="archive_rack" :items="lists?.archive_rack"
+          v-if="lists?.archive_rack != undefined" />
+        <searchBox title="Ordner-Name" rkey="archive_folder_name" :items="lists?.archive_folder_name"
+          v-if="lists?.archive_folder_name != undefined" />
+        <searchBox title="Texttyp" rkey="text_type" :items="lists?.text_type" v-if="lists?.text_type != undefined" />
+        <searchBox title="Autor*in(nen)" rkey="persons_author" :items="lists?.persons_author"
+          v-if="lists?.persons_author != undefined" />
+        <searchBox title="Empfänger*in(nen)" rkey="persons_recipient" :items="lists?.persons_recipient"
+          v-if="lists?.persons_recipient != undefined" />
+        <searchBox title="Referenzierte Personen" rkey="persons_referenced" :items="lists?.persons_referenced"
+          v-if="lists?.persons_referenced != undefined" />
+        <searchBox title="Referenzierte Institutionen" rkey="referenced_companies" :items="lists?.referenced_companies"
+          v-if="lists?.referenced_companies != undefined" />
+        <searchBox title="Schlagwörter (Inhalte/Themen)" rkey="content" :items="lists?.content"
+          v-if="lists?.content != undefined" />
       </v-expansion-panels>
     </v-col>
     <v-col cols="9" style="margin:-15px 0px 0px -15px">
 
       <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-start;">
-        <div v-for="(v, k) in esResults" :key="x">
+        <div v-for="(v, k) in esResults" :key="k">
           <paperstack :source="v" @callback="showItemDialog" />
         </div>
       </div>
@@ -31,22 +50,23 @@
         <v-row style="font-weight: 300; font-size: 0.85rem; margin-bottom: 20px;">
           <p>
             <span style="font-weight: 500;">Hinweis:&nbsp;</span>
-            <span style="text-align: left;">Unterstrichene Eigenschaften, Schlagwörter und verknüpfte Entitäten können angeklickt
+            <span style="text-align: left;">Unterstrichene Eigenschaften, Schlagwörter und verknüpfte Entitäten können
+              angeklickt
               werden, um ähnliche Dokumente zu finden.</span>
           </p>
         </v-row>
         <v-row>
-          <div>Titel (Ordner):</div>
+          <div style="display: block; width:100%">Titel (Ordner):</div>
           <div @click="applyFilter" class="btn">{{ dialogData.archive_folder_name }}</div>
         </v-row>
         <v-row>
-          <div>Titel (Dokument):</div>
+          <div style="display: block; width:100%">Titel (Dokument):</div>
           <div @click="applyFilter" style="font-weight: 200; margin: 0px 10px 15px 20px; text-align: left;">{{
             dialogData.title }}</div>
         </v-row>
         <v-row>
           <span>
-            Text-Typ:&nbsp;
+            Texttyp:&nbsp;
             <span @click="applyFilter" class="btn" style="margin-left: 0px;">{{ dialogData.text_type }}</span>
           </span>
         </v-row>
@@ -144,10 +164,12 @@ export default {
   data() {
     return {
       search: null,
+      lists: null,
       esResults: [],
 
       dialog: false,
       dialogData: {},
+      panels: []
     }
   },
   mounted() {
@@ -156,8 +178,8 @@ export default {
 
     this.search = useSearchStore();
     this.search.initialize();
+    this.lists = this.search.$state.localSearch.list;
     this.refresh();
-    this.showItemDialog("01_48_01"); // DEBUG
   },
 
   methods: {

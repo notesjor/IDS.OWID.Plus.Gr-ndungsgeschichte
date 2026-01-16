@@ -54,7 +54,7 @@ export const useSearchStore = defineStore("search", {
     },
     getCompanyById(id){
       return this.initialize ? this.companies[id] : {};
-    }
+    },
   },
 
   state: () => {

@@ -23,7 +23,7 @@
       </v-row>
       <v-row style="margin-top:13px">
         <div style="margin-right: auto;">
-          <v-tooltip text="Text-Typ" location="top">
+          <v-tooltip text="Texttyp" location="top">
             <template v-slot:activator="{ props }">
               <v-chip v-bind="props" prepend-icon="mdi-shape-outline" variant="text">
                 {{ source.text_type }}

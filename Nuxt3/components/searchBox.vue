@@ -1,8 +1,6 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-title>
-      <gradient :style="styleGradient" :color1="color1" v-if="allSameValue"
-        style="min-width: 35px; min-height: 50px; margin: -20px 5px -20px -15px" />
       <v-icon :style="styleIcon" v-if="!allSameValue" @click="selectAll">mdi-filter-remove</v-icon>
       {{ title }}
     </v-expansion-panel-title>
@@ -30,13 +28,16 @@
             </a>
           </v-col>
         </v-row>
-        <v-row style="margin:0px 0px 0px 0px">
-          <v-checkbox v-for="x in items" :key="x.item" hide-details="true" v-model="x.checked" style="width: 100%;"
-            density="compact">
+        <v-row style="margin:0px 0px 0px 0px">          
+          <v-checkbox v-for="x in paginatedItems" :key="x.item" hide-details="true" v-model="x.checked"
+            style="width: 100%;" density="compact">
             <template v-slot:label>
-              <span v-html="x.item" style="margin-left: 5px;"></span>
+              <span style="margin-left: 5px; font-size: 0.8rem; font-weight: 300; text-align: left;">{{ x.item }}</span>
             </template>
           </v-checkbox>
+          <v-pagination v-if="localItems.length > 10" v-model="currentPage" density="compact"
+            style="margin-left: auto; margin-right: auto;"
+            :length="Math.ceil(localItems.length / itemsPerPage)" :total-visible="4"></v-pagination>
         </v-row>
       </div>
     </v-expansion-panel-text>
@@ -75,34 +76,42 @@ export default {
   },
 
   mounted() {
-    const source = Array.from(this.items)
-
-    this.localItems = source.map(i => ({
+    this.localItems = Array.from(this.items).map(i => ({
       item: i,
-      checked: false
-    }))
+      checked: true
+    })).sort((a, b) => {
+      if (a.item < b.item) {
+        return -1;
+      }
+      if (a.item > b.item) {
+        return 1;
+      }
+      return 0;
+    })
   },
 
   data() {
     return {
-      localItems: []
+      localItems: [],
+      currentPage: 1,
+      itemsPerPage: 10
     }
   },
 
   methods: {
     selectAll() {
-      this.items.forEach(x => x.checked = true);
+      this.localItems.forEach(x => x.checked = true);
     },
     selectNone() {
-      this.items.forEach(x => x.checked = false);
+      this.localItems.forEach(x => x.checked = false);
     },
     selectInvert() {
-      this.items.forEach(x => x.checked = !x.checked);
+      this.localItems.forEach(x => x.checked = !x.checked);
     }
   },
 
   watch: {
-    items: {
+    localItems: {
       handler: function (val) {
         try {
           var values = val.filter(x => x.checked).map(x => x.item);
@@ -117,13 +126,18 @@ export default {
 
   computed: {
     allSameValue() {
-      return this.localItems.length && this.localItems.every(x => x.checked);
+      return this.localItems.length && (this.localItems.every(x => x.checked) || this.localItems.every(x => !x.checked));
     },
     styleGradient() {
       return this.allSameValue ? "margin: -17px 5px -17px -25px; max-width:10px" : "margin: -17px 10px -17px -25px; max-width: 50px "
     },
     styleIcon() {
       return `margin: 0px 15px 0px -10px; color: ${this.$props.color1};`;
+    },
+    paginatedItems() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.localItems.slice(start, end);
     }
   }
 }
