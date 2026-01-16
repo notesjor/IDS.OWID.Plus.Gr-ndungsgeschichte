@@ -33,10 +33,8 @@
                     style="margin: 10px 0px -20px 0px"></v-text-field>
                 </div>
               </div>
-              <div v-for="(v, k) in counter_company_filtred" :key="key" style="text-align: left; margin-bottom: 10px;">
-                <span>{{ k }}</span>:&nbsp;
-                <span @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon><span>{{ v
-                }}</span></span>
+              <div v-for="(v, k) in counter_company_filtred" :key="k" style="text-align: left; margin-bottom: 10px;">
+                <browseCompanyItem :v="v" :k="k"/>
               </div>
             </v-card-text>
           </v-card>
@@ -62,10 +60,8 @@
                     style="margin: 10px 0px -20px 0px"></v-text-field>
                 </div>
               </div>
-              <div v-for="(v, k) in counter_persons_filtred" :key="key" style="text-align: left; margin-bottom: 10px;">
-                <span>{{ k }}</span>:&nbsp;
-                <span @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon><span>{{ v
-                }}</span></span>
+              <div v-for="(v, k) in counter_persons_filtred" :key="k" style="text-align: left; margin-bottom: 10px;">
+                <browsePersonItem :v="v" :k="k"/>
               </div>
             </v-card-text>
           </v-card>
@@ -90,10 +86,8 @@
                     style="margin: 10px 0px -20px 0px"></v-text-field>
                 </div>
               </div>
-              <div v-for="(v, k) in counter_keyword_filtred" :key="key" style="text-align: left; margin-bottom: 10px;">
-                <span>{{ k }}</span>:&nbsp;
-                <span @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon><span>{{ v
-                }}</span></span>
+              <div v-for="(v, k) in counter_keyword_filtred" :key="k" style="text-align: left; margin-bottom: 10px;">
+                <browseKeywordItem :v="v" :k="k"/>
               </div>
             </v-card-text>
           </v-card>
