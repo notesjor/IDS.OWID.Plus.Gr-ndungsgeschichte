@@ -2,7 +2,7 @@
   <v-row style="margin:2px">
     <v-tooltip :text="label_author" location="top" v-if="this.number_authors > 0">
       <template v-slot:activator="{ props }">
-        <v-chip v-bind="props" prepend-icon="mdi-email-fast-outline" style="margin:0px 1px;" variant="text">
+        <v-chip v-bind="props" prepend-icon="mdi-file-sign" style="margin:0px 1px;" variant="text">
           {{ number_authors }}
         </v-chip>
       </template>

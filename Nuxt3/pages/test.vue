@@ -96,64 +96,24 @@
 </template>
 
 <script>
-import esQuick from "../api/esQuick.js";
+import { useSearchStore } from '~/stores/search';
 
 export default {
   data() {
     return {
-      esQuick: null,
-      esQuery: "*",
-      esPageCurrent: 0,
-      esPageSize: 500,
-      esPageMax: 100,
-      esResults: [],
-
-      dialog: false,
-      dialogData: {},
-
-      appName: 'Nuxt 3',
-      appDescription: 'The Intuitive Vue Framework',
-      panels: [],
-      search_dateRange: [1945, 1970],
-      inputItems: [
-        { item: 'Autor A' },
-        { item: 'Autor B' },
-        { item: 'Autor C' },
-        { item: 'Autor D' },
-      ],
+      search:{},
+      dialogData: {}
     }
   },
   mounted() {
-    this.appName = this.$config.public.appName;
-    this.appDescription = this.$config.public.appDescription;
-
-    this.esQuick = new esQuick();
-    this.esQuick.initialize("http://localhost:9200", "gruendungsgeschichte_doc");
+    this.search = useSearchStore();
+    this.search.initialize();
     this.showItemDialog("04_02_01");
   },
 
   methods: {
-    refresh() {
-      var self = this;
-      this.esQuick.easySearch(this.esQuery, this.esPageCurrent, this.esPageSize, (json) => {
-        self.esPageMax = self.esQuick.easySearchGetMax(json);
-        self.esResults = self.esQuick.easySearchGetHits(json);
-        self.esResults.forEach(item => {
-          delete item._source.fulltext;
-          try {
-            item._source.date = item._source.date.substring(0, 4);
-          } catch {
-            // ignore
-          }
-        });
-      });
-    },
     showItemDialog(id) {
-      var self = this;
-      this.esQuick.getDocumentById(id, (json) => {
-        self.dialogData = json._source;
-        self.dialog = true;
-      });
+      this.dialogData = this.search.getById(id);
     }
   }
 }

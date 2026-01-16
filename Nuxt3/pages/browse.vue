@@ -19,9 +19,24 @@
               <span class="font-weight-black">Institutionen</span>
             </template>
 
-            <v-card-text class="bg-surface-light pt-4">
-              <div v-for="(v, k) in counter_company" :key="key" style="text-align: left; margin-bottom: 10px;">
-                <span>{{ k }}</span>&nbsp;<span>({{ v }})</span>
+            <v-card-text class="pt-4">
+              <div class="bg-surface-light p-4" style="margin: -20px -20px 10px -20px;">
+                <div>Sortierung:&nbsp;
+                  <span @click="sort('company', 'alpha')" class="btn bg-surface-light"
+                    :style="sort_co_alpha">Alphabetisch</span>
+                  &nbsp;/&nbsp;
+                  <span @click="sort('company', 'frequ')" class="btn bg-surface-light"
+                    :style="sort_co_frequ">Häufigkeit</span>
+                </div>
+                <div>
+                  <v-text-field v-model="company_filter" clearable label="Instituionen filtern..."
+                    style="margin: 10px 0px -20px 0px"></v-text-field>
+                </div>
+              </div>
+              <div v-for="(v, k) in counter_company_filtred" :key="key" style="text-align: left; margin-bottom: 10px;">
+                <span>{{ k }}</span>:&nbsp;
+                <span @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon><span>{{ v
+                }}</span></span>
               </div>
             </v-card-text>
           </v-card>
@@ -33,9 +48,24 @@
               <span class="font-weight-black">Personen</span>
             </template>
 
-            <v-card-text class="bg-surface-light pt-4">
-              <div v-for="(v, k) in counter_persons" :key="key" style="text-align: left; margin-bottom: 10px;">
-                <span>{{ k }}</span>&nbsp;<span>({{ v }})</span>
+            <v-card-text class="pt-4">
+              <div class="bg-surface-light p-4" style="margin: -20px -20px 10px -20px;">
+                <div>Sortierung:&nbsp;
+                  <span @click="sort('persons', 'alpha')" class="btn bg-surface-light"
+                    :style="sort_pe_alpha">Alphabetisch</span>
+                  &nbsp;/&nbsp;
+                  <span @click="sort('persons', 'frequ')" class="btn bg-surface-light"
+                    :style="sort_pe_frequ">Häufigkeit</span>
+                </div>
+                <div>
+                  <v-text-field v-model="persons_filter" clearable label="Personen filtern..."
+                    style="margin: 10px 0px -20px 0px"></v-text-field>
+                </div>
+              </div>
+              <div v-for="(v, k) in counter_persons_filtred" :key="key" style="text-align: left; margin-bottom: 10px;">
+                <span>{{ k }}</span>:&nbsp;
+                <span @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon><span>{{ v
+                }}</span></span>
               </div>
             </v-card-text>
           </v-card>
@@ -46,9 +76,24 @@
               <span class="font-weight-black">Schlagworte</span>
             </template>
 
-            <v-card-text class="bg-surface-light pt-4">
-              <div v-for="(v, k) in counter_keyword" :key="key" style="text-align: left; margin-bottom: 10px;">
-                <span>{{ k }}</span>&nbsp;<span>({{ v }})</span>
+            <v-card-text class="pt-4">
+              <div class="bg-surface-light p-4" style="margin: -20px -20px 10px -20px;">
+                <div>Sortierung:&nbsp;
+                  <span @click="sort('keyword', 'alpha')" class="btn bg-surface-light"
+                    :style="sort_kw_alpha">Alphabetisch</span>
+                  &nbsp;/&nbsp;
+                  <span @click="sort('keyword', 'frequ')" class="btn bg-surface-light"
+                    :style="sort_kw_frequ">Häufigkeit</span>
+                </div>
+                <div>
+                  <v-text-field v-model="keyword_filter" clearable label="Schlagworte filtern..."
+                    style="margin: 10px 0px -20px 0px"></v-text-field>
+                </div>
+              </div>
+              <div v-for="(v, k) in counter_keyword_filtred" :key="key" style="text-align: left; margin-bottom: 10px;">
+                <span>{{ k }}</span>:&nbsp;
+                <span @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon><span>{{ v
+                }}</span></span>
               </div>
             </v-card-text>
           </v-card>
@@ -68,6 +113,14 @@ export default {
       counter_company: {},
       counter_persons: {},
       counter_keyword: {},
+
+      company_filter: "",
+      persons_filter: "",
+      keyword_filter: "",
+
+      company_sort: "frequ",
+      persons_sort: "frequ",
+      keyword_sort: "frequ",
     }
   },
   mounted() {
@@ -79,7 +132,7 @@ export default {
 
     this.counter_persons = this.calcFrequency(search, "persons_author", {});
     this.counter_persons = this.calcFrequency(search, "persons_recipient", this.counter_persons);
-    this.counter_persons = this.calcFrequency(search, "persons_recipient", this.counter_persons);    
+    this.counter_persons = this.calcFrequency(search, "persons_recipient", this.counter_persons);
     this.counter_persons = this.sortByFrequency(this.counter_persons);
 
     this.counter_keyword = this.calcFrequency(search, "content", {});
@@ -111,10 +164,70 @@ export default {
           sorted[key] = value;
           return sorted;
         }, {});
+    },
+    search() {
+
+    },
+    sort(prop, type) {
+      this[prop + "_sort"] = type;
+      if (type == "frequ")
+        this[`counter_${prop}`] = this.sortByFrequency(this[`counter_${prop}`])
+      else
+        this[`counter_${prop}`] = this.sortByKey(this[`counter_${prop}`])
+    },
+    filter(input, query) {
+      const res = {};
+      for (const key in input) {
+        if (key.includes(query)) {
+          res[key] = input[key];
+        }
+      }
+      return res;
     }
   },
 
+  computed: {
+    sort_co_alpha() {
+      return this.company_sort == "alpha" ? "border-bottom: 1px solid #000;" : "";
+    },
+    sort_co_frequ() {
+      return this.company_sort == "frequ" ? "border-bottom: 1px solid #000;" : "";
+    },
+    sort_pe_alpha() {
+      return this.persons_sort == "alpha" ? "border-bottom: 1px solid #000;" : "";
+    },
+    sort_pe_frequ() {
+      return this.persons_sort == "frequ" ? "border-bottom: 1px solid #000;" : "";
+    },
+    sort_kw_alpha() {
+      return this.keyword_sort == "alpha" ? "border-bottom: 1px solid #000;" : "";
+    },
+    sort_kw_frequ() {
+      return this.keyword_sort == "frequ" ? "border-bottom: 1px solid #000;" : "";
+    },
+    counter_company_filtred() {
+      return this.filter(this.counter_company, this.company_filter);
+    },
+    counter_persons_filtred() {
+      return this.filter(this.counter_persons, this.persons_filter);
+    },
+    counter_keyword_filtred() {
+      return this.filter(this.counter_keyword, this.keyword_filter);
+    },
+  }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.btn {
+  border-bottom: 1px dotted #000;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 200;
+  text-align: left;
+}
+
+.btn:hover {
+  background-color: rgb(229, 231, 235);
+}
+</style>

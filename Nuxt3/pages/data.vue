@@ -121,7 +121,7 @@ a {
 a:hover {
   text-decoration: none;
   border-bottom: 1px dotted #000;
-  background-color: rgba(211, 211, 211, 0.2);
+  background-color: rgb(229, 231, 235);
 }
 
 div.item {
@@ -129,6 +129,6 @@ div.item {
 }
 
 div.item:hover {
-  background-color: rgba(211, 211, 211, 0.2);
+  background-color: rgb(229, 231, 235);
 }
 </style>

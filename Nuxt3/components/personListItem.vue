@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import esQuick from "../api/esQuick.js";
+import { useSearchStore } from '~/stores/search';
 
 export default {
   name: 'personListItem',
@@ -40,23 +40,14 @@ export default {
   },
   data() {
     return {
-      esQuick: null,
+      search: null,
       data: {}
     }
   },
   mounted() {
-    this.esQuick = new esQuick();
-    this.esQuick.initialize("http://localhost:9200", "gruendungsgeschichte_person");
-    this.loadItem(this.source);
+    this.search = useSearchStore();
+    this.search.initialize();
+    this.data = this.search.getPersonById(this.source);
   },
-
-  methods: {
-    loadItem(id) {
-      var self = this;
-      this.esQuick.getDocumentById(id, (json) => {
-        self.data = json._source;
-      });
-    }
-  }
 }
 </script>

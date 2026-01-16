@@ -10,47 +10,129 @@
   <v-row>
     <v-col cols="3" style="padding: 0px 30px 0px 20px;">
       <v-expansion-panels v-model="panels" multiple>
-        <searchBox title="xyz" rkey="xyz" :items="search?.localSearch?.list?.archive_rack" />
+        <!--<searchBox title="xyz" rkey="xyz" :items="search?.localSearch?.list?.archive_rack" />-->
       </v-expansion-panels>
     </v-col>
     <v-col cols="9" style="margin:-15px 0px 0px -15px">
 
       <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-start;">
-        <div v-for="x in esResults" :key="x">
-          <paperstack :source="x._source" @callback="showItemDialog" />
+        <div v-for="(v, k) in esResults" :key="x">
+          <paperstack :source="v" @callback="showItemDialog" />
         </div>
       </div>
     </v-col>
   </v-row>
 
-  <v-dialog max-width="800" v-model="dialog">
-    <v-card title="Dialog">
-      <v-card-text>
-        <div>
-          <img :src="src" alt="Bild auf oberstem Blatt"
-            style="max-height: 400px; max-width: 480px; padding: 10px; float: left;" />
-          <i>Regal:</i> {{ dialogData.archive_rack }} / <i>Ordner:</i> {{ dialogData.archive_folder }} /
-          <i>Ordner-Name:</i> {{ dialogData.archive_folder_name }}<br />
-          <i>Dokument-Nr. im Ordner:</i> {{ dialogData.archive_document }}<br />
-          <i>Text-Typ:</i> {{ dialogData.text_type }}<br />
-          <br />
-          <i>Kategorie:</i> {{ category }}<br />
-          <i>Jahr:</i> {{ year }}<br />
-          <i>Seitenanzahl:</i> {{ pages }}<br />
-          <i>Titel:</i> {{ dialogData.titel }}<br /><br />
-          <i>Inhalts-Schlagwörter:</i><br />
-          <div>
-            <v-chip v-for="x in dialogData.content" :key="x" style="margin:2px">{{ x }}</v-chip>
-          </div>
-          <i>Autor:</i> {{ author }}<br />
-        </div>
+  <v-dialog max-width="800" v-model="dialog" style="margin:75px 0px 0px 0px">
+    <v-card>
+      <v-card-text style="max-width: 100ch; padding:40px">
+        <v-row style="font-size:1.25rem; font-weight: 500;">Dokument: {{ dialogData.archive_rack }}/{{
+          dialogData.archive_folder }}/{{ dialogData.archive_document }}</v-row>
+        <v-row style="font-weight: 300; font-size: 0.85rem; margin-bottom: 20px;">
+          <p>
+            <span style="font-weight: 500;">Hinweis:&nbsp;</span>
+            <span style="text-align: left;">Unterstrichene Eigenschaften, Schlagwörter und verknüpfte Entitäten können angeklickt
+              werden, um ähnliche Dokumente zu finden.</span>
+          </p>
+        </v-row>
+        <v-row>
+          <div>Titel (Ordner):</div>
+          <div @click="applyFilter" class="btn">{{ dialogData.archive_folder_name }}</div>
+        </v-row>
+        <v-row>
+          <div>Titel (Dokument):</div>
+          <div @click="applyFilter" style="font-weight: 200; margin: 0px 10px 15px 20px; text-align: left;">{{
+            dialogData.title }}</div>
+        </v-row>
+        <v-row>
+          <span>
+            Text-Typ:&nbsp;
+            <span @click="applyFilter" class="btn" style="margin-left: 0px;">{{ dialogData.text_type }}</span>
+          </span>
+        </v-row>
+        <v-row>
+          <span>
+            Datum:&nbsp;
+            <span style="font-weight: 200;">
+              <span @click="applyFilter" class="btn" style="margin: 0px;">{{ dialogData.date.substring(0, 4) }}</span>
+              <span v-if="dialogData.date.length > 4">{{ dialogData.date.substring(4) }}</span>
+            </span>
+            /&nbsp;Anzahl Seiten:&nbsp;
+            <span @click="applyFilter" class="btn" style="margin: 0px;">{{ dialogData.pages }}</span>
+          </span>
+        </v-row>
+        <v-row>
+          <v-col cols="3">
+            <img :src="`thumbnail/${dialogData.id}.jpg`" alt="Bild auf oberstem Blatt"
+              style="max-height: 300px; max-width: 480px; margin-left:auto; margin-right: auto;" />
+            <v-btn prepend-icon="mdi-download-circle-outline" style="margin:5px 0px" v-if="dialogData.has_fulltext"
+              :href="`fulltext/${dialogData.id}.pdf`">
+              Download</v-btn>
+          </v-col>
+          <v-col cols="1"></v-col>
+          <v-col cols="8">
+            Schlagwörter (Inhalt):<br />
+            <div>
+              <v-chip class="btnChip" v-for="x in dialogData.content" :key="x" style="margin:2px">{{ x }}</v-chip>
+            </div>
+          </v-col>
+        </v-row>
+        <v-row style="margin-top:30px">
+          Verknüpfte Entitäten:
+          <v-expansion-panels variant="accordion">
+            <v-expansion-panel v-if="dialogData.persons_author?.length > 0">
+              <v-expansion-panel-title>
+                <v-icon>mdi-email-fast-outline</v-icon>
+                <span style="margin:0px 5px">Verfasser*innen</span>
+                <span>(Anzahl: {{ dialogData.persons_author?.length }})</span>
+              </v-expansion-panel-title>
+              <v-expansion-panel-text>
+                <personList :data="dialogData.persons_author" />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+            <v-expansion-panel v-if="dialogData.persons_recipient?.length > 0">
+              <v-expansion-panel-title>
+                <v-icon>mdi-email-newsletter</v-icon>
+                <span style="margin:0px 5px">Adressat*innen</span>
+                <span>(Anzahl: {{ dialogData.persons_recipient?.length }})</span>
+              </v-expansion-panel-title>
+              <v-expansion-panel-text>
+                <personList :data="dialogData.persons_recipient" />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+            <v-expansion-panel v-if="dialogData.persons_referenced?.length > 0">
+              <v-expansion-panel-title>
+                <v-icon>mdi-comment-account-outline</v-icon>
+                <span style="margin:0px 5px">Sonstige refernzierte Personen</span>
+                <span>(Anzahl: {{ dialogData.persons_referenced?.length }})</span>
+              </v-expansion-panel-title>
+              <v-expansion-panel-text>
+                <personList :data="dialogData.persons_referenced" />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+            <v-expansion-panel v-if="dialogData.referenced_companies?.length > 0">
+              <v-expansion-panel-title>
+                <v-icon>mdi-domain</v-icon>
+                <span style="margin:0px 5px">Referenzierte Institutionen</span>
+                <span>(Anzahl: {{ dialogData.referenced_companies?.length }})</span>
+              </v-expansion-panel-title>
+              <v-expansion-panel-text>
+                <companyList :data="dialogData.referenced_companies" />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+            <v-expansion-panel v-if="dialogData.referenced_documents?.length > 0">
+              <v-expansion-panel-title>
+                <v-icon>mdi-link-box-variant-outline</v-icon>
+                <span style="margin:0px 5px">Referenzierte Dokumente</span>
+                <span>(Anzahl: {{ dialogData.referenced_documents?.length }})</span>
+              </v-expansion-panel-title>
+              <v-expansion-panel-text>
+                <documentList :data="dialogData.referenced_documents" />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-row>
       </v-card-text>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-
-        <v-btn text="Ok" @click="isActive.value = false"></v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -63,27 +145,10 @@ export default {
   data() {
     return {
       search: null,
-
-      esQuick: null,
-      esQuery: "*",
-      esPageCurrent: 0,
-      esPageSize: 500,
-      esPageMax: 100,
       esResults: [],
 
       dialog: false,
       dialogData: {},
-
-      appName: 'Nuxt 3',
-      appDescription: 'The Intuitive Vue Framework',
-      panels: [],
-      search_dateRange: [1945, 1970],
-      inputItems: [
-        { item: 'Autor A' },
-        { item: 'Autor B' },
-        { item: 'Autor C' },
-        { item: 'Autor D' },
-      ],
     }
   },
   mounted() {
@@ -92,41 +157,45 @@ export default {
 
     this.search = useSearchStore();
     this.search.initialize();
-    //this.esQuick = new esQuick();
-    //this.esQuick.initialize("http://localhost:9200", "gruendungsgeschichte_doc");
     this.refresh();
+    this.showItemDialog("01_48_01"); // DEBUG
   },
 
   methods: {
     refresh() {
-      var self = this;
-
-      this.esResults = self.search.getCurrentData().hits.hits;
-
-      /*
-      this.esQuick.easySearch(this.esQuery, this.esPageCurrent, this.esPageSize, (json) => {
-        self.esPageMax = self.esQuick.easySearchGetMax(json);
-        self.esResults = self.esQuick.easySearchGetHits(json);
-        self.esResults.forEach(item => {
-          delete item._source.fulltext;
-          try {
-            item._source.date = item._source.date.substring(0, 4);
-          } catch {
-            // ignore
-          }
-        });
-      });
-      */
+      this.esResults = this.search.getCurrentData();
     },
     showItemDialog(id) {
-      var self = this;
-      this.esQuick.getDocumentById(id, (json) => {
-        self.dialogData = json._source;
-        self.dialog = true;
-      });
+      this.dialogData = this.search.getById(id);
+      this.dialog = true;
+    },
+    applyFilter() {
+      alert()
     }
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.btn {
+  border-bottom: 1px dotted #000;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 200;
+  margin: 0px 10px 15px 20px;
+  text-align: left;
+}
+
+.btn:hover {
+  background-color: rgb(229, 231, 235);
+}
+
+.btnChip {
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.btnChip:hover {
+  background-color: rgb(229, 231, 235);
+}
+</style>
