@@ -155,6 +155,14 @@
       </v-card-text>
     </v-card>
   </v-dialog>
+
+  <v-dialog v-model="loading" persistent>
+    <div class="d-flex flex-column align-center justify-center" 
+      style="width:110%; background-color: white; margin:20px 0px 20px -25px; padding: 20px 0px">
+      <v-progress-circular indeterminate :size="60" class="mb-4" />
+      <div>Daten werden geladen...</div>
+    </div>
+  </v-dialog>
 </template>
 
 <script>
@@ -169,7 +177,8 @@ export default {
 
       dialog: false,
       dialogData: {},
-      panels: []
+      panels: [],
+      loading: false,
     }
   },
   mounted() {
@@ -184,7 +193,11 @@ export default {
 
   methods: {
     refresh() {
-      this.esResults = this.search.getCurrentData();
+      this.loading = true;
+      setTimeout(() => {
+        this.esResults = this.search.getCurrentData();
+        this.loading = false;
+      }, 200);
     },
     showItemDialog(id) {
       this.dialogData = this.search.getById(id);
