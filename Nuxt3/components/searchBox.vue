@@ -28,7 +28,7 @@
             </a>
           </v-col>
         </v-row>
-        <v-row style="margin:0px 0px 0px 0px">          
+        <v-row style="margin:0px 0px 0px 0px">
           <v-checkbox v-for="x in paginatedItems" :key="x.item" hide-details="true" v-model="x.checked"
             style="width: 100%;" density="compact">
             <template v-slot:label>
@@ -36,8 +36,8 @@
             </template>
           </v-checkbox>
           <v-pagination v-if="localItems.length > 10" v-model="currentPage" density="compact"
-            style="margin-left: auto; margin-right: auto;"
-            :length="Math.ceil(localItems.length / itemsPerPage)" :total-visible="4"></v-pagination>
+            style="margin-left: auto; margin-right: auto;" :length="Math.ceil(localItems.length / itemsPerPage)"
+            :total-visible="4"></v-pagination>
         </v-row>
       </div>
     </v-expansion-panel-text>
@@ -51,6 +51,8 @@ label {
 </style>
 
 <script>
+import { useSearchStore } from '~/stores/search';
+
 export default {
   props: {
     title: {
@@ -59,10 +61,6 @@ export default {
     },
     rkey: {
       type: String,
-      required: true
-    },
-    items: {
-      type: [Array, Set],
       required: true
     },
     color1: {
@@ -76,25 +74,33 @@ export default {
   },
 
   mounted() {
-    this.localItems = Array.from(this.items).map(i => ({
+    this.search = useSearchStore();
+    this.search.initialize();
+
+    const items = this.search.$state.localSearch.list[this.rkey] || [];
+    const query = this.search.$state.localSearch.query[this.rkey] || [];
+
+    const querySet = new Set(Array.isArray(query) ? query : [query]);
+
+    this.syncLock = true;
+    this.localItems = Array.from(items).map(i => ({
       item: i,
-      checked: true
+      checked: querySet.has(i)
     })).sort((a, b) => {
-      if (a.item < b.item) {
-        return -1;
-      }
-      if (a.item > b.item) {
-        return 1;
-      }
+      if (a.item < b.item) return -1;
+      if (a.item > b.item) return 1;
       return 0;
-    })
+    });
+    this.syncLock = false;
   },
 
   data() {
     return {
+      search: {},
       localItems: [],
       currentPage: 1,
-      itemsPerPage: 10
+      itemsPerPage: 10,
+      syncLock: false
     }
   },
 
@@ -113,12 +119,13 @@ export default {
   watch: {
     localItems: {
       handler: function (val) {
-        try {
-          var values = val.filter(x => x.checked).map(x => x.item);
-          this.$emit("change", { rkey: this.rkey, values: values });
-        } catch {
-          // ignore
-        }
+        if (!this.syncLock)
+          try {
+            this.search.$state.localSearch.query[this.rkey] = val.filter(x => x.checked).map(x => x.item);
+            this.$emit("changed");
+          } catch {
+            // ignore
+          }
       },
       deep: true
     }

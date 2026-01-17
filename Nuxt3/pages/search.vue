@@ -14,22 +14,15 @@
   </v-row>
   <v-row>
     <v-col cols="3" style="padding: 0px 30px 0px 20px;">
-      <v-expansion-panels v-model="panels" multiple>
-        <searchBox title="Regal-Nummer" rkey="archive_rack" :items="lists?.archive_rack"
-          v-if="lists?.archive_rack != undefined" />
-        <searchBox title="Ordner-Name" rkey="archive_folder_name" :items="lists?.archive_folder_name"
-          v-if="lists?.archive_folder_name != undefined" />
-        <searchBox title="Texttyp" rkey="text_type" :items="lists?.text_type" v-if="lists?.text_type != undefined" />
-        <searchBox title="Autor*in(nen)" rkey="persons_author" :items="lists?.persons_author"
-          v-if="lists?.persons_author != undefined" />
-        <searchBox title="Empfänger*in(nen)" rkey="persons_recipient" :items="lists?.persons_recipient"
-          v-if="lists?.persons_recipient != undefined" />
-        <searchBox title="Referenzierte Personen" rkey="persons_referenced" :items="lists?.persons_referenced"
-          v-if="lists?.persons_referenced != undefined" />
-        <searchBox title="Referenzierte Institutionen" rkey="referenced_companies" :items="lists?.referenced_companies"
-          v-if="lists?.referenced_companies != undefined" />
-        <searchBox title="Schlagwörter (Inhalte/Themen)" rkey="content" :items="lists?.content"
-          v-if="lists?.content != undefined" />
+      <v-expansion-panels v-model="panels" multiple v-if="search != null">
+        <searchBox @changed="reload" title="Regal-Nummer" rkey="archive_rack"/>
+        <searchBox @changed="reload" title="Ordner-Name" rkey="archive_folder_name"/>
+        <searchBox @changed="reload" title="Texttyp" rkey="text_type"/>
+        <searchBox @changed="reload" title="Autor*in(nen)" rkey="persons_author"/>
+        <searchBox @changed="reload" title="Empfänger*in(nen)" rkey="persons_recipient"/>
+        <searchBox @changed="reload" title="Referenzierte Personen" rkey="persons_referenced"/>
+        <searchBox @changed="reload" title="Referenzierte Institutionen" rkey="referenced_companies"/>
+        <searchBox @changed="reload" title="Schlagwörter (Inhalte/Themen)" rkey="content"/>
       </v-expansion-panels>
     </v-col>
     <v-col cols="9" style="margin:-15px 0px 0px -15px">
@@ -172,7 +165,6 @@ export default {
   data() {
     return {
       search: null,
-      lists: null,
       esResults: [],
 
       dialog: false,
@@ -187,7 +179,6 @@ export default {
 
     this.search = useSearchStore();
     this.search.initialize();
-    this.lists = this.search.$state.localSearch.list;
 
     // Parse URL parameters
     const params = new URLSearchParams(window.location.search);
@@ -213,11 +204,11 @@ export default {
       this.search.localSearch.query[key] = query[key];
     });
 
-    this.refresh();
+    this.reload();
   },
 
   methods: {
-    refresh() {
+    reload() {
       this.loading = true;
       setTimeout(() => {
         this.esResults = this.search.getCurrentData();
@@ -228,9 +219,6 @@ export default {
       this.dialogData = this.search.getById(id);
       this.dialog = true;
     },
-    applyFilter() {
-      alert()
-    }
   }
 }
 </script>
