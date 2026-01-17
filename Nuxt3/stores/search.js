@@ -44,16 +44,27 @@ export const useSearchStore = defineStore("search", {
       this.is_initialized = true;
     },
     getCurrentData() {
-      return this.initialize ? this.all : {};
+      if (!this.is_initialized) this.initialize();
+
+      // if localSearch is available, use it to filter data and return matching items
+      if (this.localSearch) {
+        return this.localSearch.filter();
+      }
+
+      // fallback: return all documents as an array
+      return Object.values(this.all);
     },
-    getById(id){
-      return this.initialize ? this.all[id] : {};
+    getById(id) {
+      if (!this.is_initialized) this.initialize();
+      return this.all[id] || {};
     },
-    getPersonById(id){
-      return this.initialize ? this.persons[id] : {};
+    getPersonById(id) {
+      if (!this.is_initialized) this.initialize();
+      return this.persons[id] || {};
     },
-    getCompanyById(id){
-      return this.initialize ? this.companies[id] : {};
+    getCompanyById(id) {
+      if (!this.is_initialized) this.initialize();
+      return this.companies[id] || {};
     },
   },
 

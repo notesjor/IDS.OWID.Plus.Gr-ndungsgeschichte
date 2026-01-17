@@ -42,7 +42,7 @@
     </v-col>
   </v-row>
 
-  <v-dialog max-width="800" v-model="dialog" style="margin:75px 0px 0px 0px">
+  <v-dialog max-width="800" v-model="dialog" style="margin:75px 0px 0px 0px; z-index:99999">
     <v-card>
       <v-card-text style="max-width: 100ch; padding:40px">
         <v-row style="font-size:1.25rem; font-weight: 500;">Dokument: {{ dialogData.archive_rack }}/{{
@@ -188,6 +188,31 @@ export default {
     this.search = useSearchStore();
     this.search.initialize();
     this.lists = this.search.$state.localSearch.list;
+
+    // Parse URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const query = {};
+
+    params.forEach((value, key) => {
+      if (key === 'id') {
+        this.showItemDialog(value);
+      } else {
+        if (query[key]) {
+          if (Array.isArray(query[key])) {
+            query[key].push(value);
+          } else {
+            query[key] = [query[key], value];
+          }
+        } else {
+          query[key] = value;
+        }
+      }
+    });
+
+    Object.keys(query).forEach((key) => {
+      this.search.localSearch.query[key] = query[key];
+    });
+
     this.refresh();
   },
 
