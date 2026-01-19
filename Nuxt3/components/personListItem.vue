@@ -1,7 +1,7 @@
 <template>
   <div style="margin:20px 0px">
     <v-row>
-      <span class="btn" @click="applyFilter('person_id', data.id)">
+      <span class="btn" @click="applyFilter(rkey, data.id)">
         {{ data.id }} (<i>{{ data.year_birth }}-{{ data.year_death }}</i>)
       </span>
       <a :href="data.wiki_url" v-if="data.wiki_url != undefined && data.wiki_url != null && data.wiki_url.length > 0"
@@ -41,6 +41,9 @@ export default {
       type: String,
       default: ""
     },
+    rkey: {
+      type: String
+    }
   },
   data() {
     return {

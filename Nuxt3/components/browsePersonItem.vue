@@ -2,13 +2,7 @@
   <div style="padding-bottom: 5px;">
     <div>
       <span>{{ k }} (<i>{{ info.year_birth }}-{{ info.year_death }}</i>)</span>:&nbsp;
-      <v-tooltip text="Dokumente mit Bezug zu dieser Person" location="top">
-        <template v-slot:activator="{ props }">
-          <span v-bind="props" @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon>
-            <span>{{ v }}</span>
-          </span>
-        </template>
-      </v-tooltip>
+      <personCounterSmall :source="info" />
     </div>
     <div style="font-weight: 200;">
       {{ info.info }}
@@ -67,12 +61,6 @@ export default {
 
     if (this.info.info == "")
       this.info.info = "Zur Person konnten keine Informationen ermittelt werden.";
-  },
-
-  methods: {
-    search() {
-
-    }
   },
 }
 </script>

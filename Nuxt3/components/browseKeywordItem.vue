@@ -3,7 +3,7 @@
 
   <v-tooltip text="Dokumente mit Bezug zu diesem Schlagwort" location="top">
     <template v-slot:activator="{ props }">
-      <span v-bind="props" @click="search()" class="btn"><v-icon>mdi-text-box-search-outline</v-icon>
+      <span v-bind="props" @click="search(k)" class="btn"><v-icon>mdi-text-box-search-outline</v-icon>
         <span>{{ v }}</span></span>
     </template>
   </v-tooltip>
@@ -21,8 +21,13 @@ export default {
   },
 
   methods: {
-    search() {
-
+    search(value) {
+      const params = new URLSearchParams(window.location.search);
+      console.log(window.location.pathname);
+      params.set("content", value);
+      const newUrl = `/plus/idsgg/search?${params.toString()}`;
+      window.history.pushState({}, '', newUrl);
+      window.location.reload();
     }
   },
 

@@ -106,7 +106,7 @@
                 <span>(Anzahl: {{ dialogData.persons_author?.length }})</span>
               </v-expansion-panel-title>
               <v-expansion-panel-text>
-                <personList :data="dialogData.persons_author" />
+                <personList :data="dialogData.persons_author" rkey="persons_author" />
               </v-expansion-panel-text>
             </v-expansion-panel>
             <v-expansion-panel v-if="dialogData.persons_recipient?.length > 0">
@@ -116,7 +116,7 @@
                 <span>(Anzahl: {{ dialogData.persons_recipient?.length }})</span>
               </v-expansion-panel-title>
               <v-expansion-panel-text>
-                <personList :data="dialogData.persons_recipient" />
+                <personList :data="dialogData.persons_recipient" rkey="persons_recipient" />
               </v-expansion-panel-text>
             </v-expansion-panel>
             <v-expansion-panel v-if="dialogData.persons_referenced?.length > 0">
@@ -126,7 +126,7 @@
                 <span>(Anzahl: {{ dialogData.persons_referenced?.length }})</span>
               </v-expansion-panel-title>
               <v-expansion-panel-text>
-                <personList :data="dialogData.persons_referenced" />
+                <personList :data="dialogData.persons_referenced" rkey="persons_referenced" />
               </v-expansion-panel-text>
             </v-expansion-panel>
             <v-expansion-panel v-if="dialogData.referenced_companies?.length > 0">

@@ -57,6 +57,10 @@ export default {
     this.max = items.max;
     this.selectedRange = [this.min, this.max];
 
+    if(this.search.$state.localSearch.query[this.rkey] === undefined) {
+      this.syncLock = false;
+      return;
+    }
     const query = parseInt(this.search.$state.localSearch.query[this.rkey]);
     this.selectedRange = [query, query];
     this.syncLock = false;
