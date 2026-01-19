@@ -21,6 +21,7 @@ export const useSearchStore = defineStore("search", {
           persons_referenced: { type: "keyword" },
           referenced_companies: { type: "keyword" },
           pages: { type: "range" },
+          date: { type: "dateyearonly" }
         },
       });
 

@@ -150,6 +150,58 @@ export class DictMapping extends BaseMapping {
 }
 
 /* =====================
+   DATE (Datum)
+   ===================== */
+export class DateMapping  extends BaseMapping { 
+  collect(item, list) {
+    const dateStr = item[this.property];
+    if (!dateStr) return;
+    const date = new Date(dateStr);
+
+    if (!list.min || date < list.min) {
+      list.min = date;
+    }
+    if (!list.max || date > list.max) {
+      list.max = date;
+    }
+  }
+
+  matches(item, queryValue) {
+    if (!queryValue) return true;
+    const dateStr = item[this.property];
+    if (!dateStr) return false;
+    const date = new Date(dateStr);
+    return date >= new Date(queryValue.from) && date <= new Date(queryValue.to);
+  }
+}
+
+/* =====================
+   DATEYEARONLY (Datum nur Jahr (int) vergleichen)
+   ===================== */
+export class DateYearOnlyMapping extends BaseMapping {
+  collect(item, list) {
+    const dateStr = item[this.property];
+    if (!dateStr) return;
+    const year = new Date(dateStr).getFullYear();
+    if (typeof year !== "number") return;
+    list.min = list.min === undefined ? year : Math.min(list.min, year);
+    list.max = list.max === undefined ? year : Math.max(list.max, year);
+  }
+
+  matches(item, queryValue) {
+    if (!queryValue) return true;
+    const dateStr = item[this.property];
+    if (!dateStr) return false;
+    const year = new Date(dateStr).getFullYear();
+    if (typeof year !== "number") return false;
+    const { from, to } = queryValue;
+    if (from !== undefined && year < from) return false;
+    if (to !== undefined && year > to) return false;
+    return true;
+  }
+}
+
+/* =====================
    FULLTEXT (Volltext-Index mit flexsearch)
    ===================== */
 export class FulltextMapping extends BaseMapping {
@@ -266,6 +318,16 @@ export class LocalSearch {
 
         case "dict":
           instance = new DictMapping(prop, config);
+          this.list[prop] = {};
+          break;
+
+        case "date":
+          instance = new DateMapping(prop, config);
+          this.list[prop] = {};
+          break;
+
+        case "dateyearonly":
+          instance = new DateYearOnlyMapping(prop, config);
           this.list[prop] = {};
           break;
         

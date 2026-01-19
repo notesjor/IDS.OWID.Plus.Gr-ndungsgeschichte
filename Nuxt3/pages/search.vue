@@ -15,14 +15,15 @@
   <v-row>
     <v-col cols="3" style="padding: 0px 30px 0px 20px;">
       <v-expansion-panels v-model="panels" multiple v-if="search != null">
-        <searchBox @changed="reload" title="Regal-Nummer" rkey="archive_rack"/>
-        <searchBox @changed="reload" title="Ordner-Name" rkey="archive_folder_name"/>
-        <searchBox @changed="reload" title="Texttyp" rkey="text_type"/>
-        <searchBox @changed="reload" title="Autor*in(nen)" rkey="persons_author"/>
-        <searchBox @changed="reload" title="Empfänger*in(nen)" rkey="persons_recipient"/>
-        <searchBox @changed="reload" title="Referenzierte Personen" rkey="persons_referenced"/>
-        <searchBox @changed="reload" title="Referenzierte Institutionen" rkey="referenced_companies"/>
-        <searchBox @changed="reload" title="Schlagwörter (Inhalte/Themen)" rkey="content"/>
+        <searchBox @changed="reload" title="Regal-Nummer" rkey="archive_rack" />
+        <searchBox @changed="reload" title="Ordner-Name" rkey="archive_folder_name" />
+        <searchBox @changed="reload" title="Texttyp" rkey="text_type" />
+        <searchBox @changed="reload" title="Autor*in(nen)" rkey="persons_author" />
+        <searchBox @changed="reload" title="Empfänger*in(nen)" rkey="persons_recipient" />
+        <searchBox @changed="reload" title="Referenzierte Personen" rkey="persons_referenced" />
+        <searchBox @changed="reload" title="Referenzierte Institutionen" rkey="referenced_companies" />
+        <searchBox @changed="reload" title="Schlagwörter (Inhalte/Themen)" rkey="content" />
+        <searchBoxYearRange @changed="reload" title="Zeitraum" rkey="date" />
       </v-expansion-panels>
     </v-col>
     <v-col cols="9" style="margin:-15px 0px 0px -15px">
@@ -50,28 +51,33 @@
         </v-row>
         <v-row>
           <div style="display: block; width:100%">Titel (Ordner):</div>
-          <div @click="applyFilter('archive_folder_name', dialogData.archive_folder_name)" class="btn">{{ dialogData.archive_folder_name }}</div>
+          <div @click="applyFilter('archive_folder_name', dialogData.archive_folder_name)" class="btn">{{
+            dialogData.archive_folder_name }}</div>
         </v-row>
         <v-row>
           <div style="display: block; width:100%">Titel (Dokument):</div>
-          <div @click="applyFilter('archive_folder_name', dialogData.title)" style="font-weight: 200; margin: 0px 10px 15px 20px; text-align: left;">{{
-            dialogData.title }}</div>
+          <div @click="applyFilter('archive_folder_name', dialogData.title)"
+            style="font-weight: 200; margin: 0px 10px 15px 20px; text-align: left;">{{
+              dialogData.title }}</div>
         </v-row>
         <v-row>
           <span>
             Texttyp:&nbsp;
-            <span @click="applyFilter('text_type', dialogData.text_type)" class="btn" style="margin-left: 0px;">{{ dialogData.text_type }}</span>
+            <span @click="applyFilter('text_type', dialogData.text_type)" class="btn" style="margin-left: 0px;">{{
+              dialogData.text_type }}</span>
           </span>
         </v-row>
         <v-row>
           <span>
             Datum:&nbsp;
             <span style="font-weight: 200;">
-              <span @click="applyFilter('date', dialogData.date.substring(0, 4))" class="btn" style="margin: 0px;">{{ dialogData.date.substring(0, 4) }}</span>
+              <span @click="applyFilter('date', dialogData.date.substring(0, 4))" class="btn" style="margin: 0px;">{{
+                dialogData.date.substring(0, 4) }}</span>
               <span v-if="dialogData.date.length > 4">{{ dialogData.date.substring(4) }}</span>
             </span>
             /&nbsp;Anzahl Seiten:&nbsp;
-            <span @click="applyFilter('pages', dialogData.pages)" class="btn" style="margin: 0px;">{{ dialogData.pages }}</span>
+            <span @click="applyFilter('pages', dialogData.pages)" class="btn" style="margin: 0px;">{{ dialogData.pages
+              }}</span>
           </span>
         </v-row>
         <v-row>
@@ -150,7 +156,7 @@
   </v-dialog>
 
   <v-dialog v-model="loading" persistent>
-    <div class="d-flex flex-column align-center justify-center" 
+    <div class="d-flex flex-column align-center justify-center"
       style="width:110%; background-color: white; margin:20px 0px 20px -25px; padding: 20px 0px">
       <v-progress-circular indeterminate :size="60" class="mb-4" />
       <div>Daten werden geladen...</div>
@@ -187,6 +193,9 @@ export default {
     params.forEach((value, key) => {
       if (key === 'id') {
         this.showItemDialog(value);
+      } else if (key === 'date') {
+        const year = parseInt(value);
+        query[key] = { from: year, to: year };
       } else {
         if (query[key]) {
           if (Array.isArray(query[key])) {
