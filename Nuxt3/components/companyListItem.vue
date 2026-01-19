@@ -1,9 +1,10 @@
 <template>
   <div style="padding-bottom: 5px;">
     <div>
-      <span>{{ source }}
-        <span v-if="info.city != undefined && info.city != null && info.city.length > 0">[<i>{{ info.city }}</i>]</span>
+      <span style="text-align: left;">
+        <span class="btn" @click="applyFilter('referenced_companies', source)">{{ source }}</span>
         &nbsp;
+        <span v-if="info.city != undefined && info.city != null && info.city.length > 0">[<i>{{ info.city }}</i>]</span>
       </span>
     </div>
   </div>
@@ -35,6 +36,17 @@ export default {
     else
       this.info = search.getCompanyById(this.source);
   },
+  methods:
+  {
+    applyFilter(key, value) {
+      const params = new URLSearchParams(window.location.search);
+      console.log(window.location.pathname);
+      params.set(key, value);
+      const newUrl = `/plus/idsgg/search?${params.toString()}`;
+      window.history.pushState({}, '', newUrl);
+      window.location.reload();
+    }
+  }
 }
 </script>
 
@@ -43,7 +55,6 @@ export default {
   border-bottom: 1px dotted #000;
   background-color: white;
   cursor: pointer;
-  font-weight: 200;
   text-align: left;
 }
 

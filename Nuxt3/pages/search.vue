@@ -221,8 +221,9 @@ export default {
     },
     applyFilter(key, value) {
       const params = new URLSearchParams(window.location.search);
+      console.log(window.location.pathname);
       params.set(key, value);
-      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      const newUrl = `/plus/idsgg/search?${params.toString()}`;
       window.history.pushState({}, '', newUrl);
       window.location.reload();
     }
