@@ -50,28 +50,28 @@
         </v-row>
         <v-row>
           <div style="display: block; width:100%">Titel (Ordner):</div>
-          <div @click="applyFilter" class="btn">{{ dialogData.archive_folder_name }}</div>
+          <div @click="applyFilter('archive_folder_name', dialogData.archive_folder_name)" class="btn">{{ dialogData.archive_folder_name }}</div>
         </v-row>
         <v-row>
           <div style="display: block; width:100%">Titel (Dokument):</div>
-          <div @click="applyFilter" style="font-weight: 200; margin: 0px 10px 15px 20px; text-align: left;">{{
+          <div @click="applyFilter('archive_folder_name', dialogData.title)" style="font-weight: 200; margin: 0px 10px 15px 20px; text-align: left;">{{
             dialogData.title }}</div>
         </v-row>
         <v-row>
           <span>
             Texttyp:&nbsp;
-            <span @click="applyFilter" class="btn" style="margin-left: 0px;">{{ dialogData.text_type }}</span>
+            <span @click="applyFilter('text_type', dialogData.text_type)" class="btn" style="margin-left: 0px;">{{ dialogData.text_type }}</span>
           </span>
         </v-row>
         <v-row>
           <span>
             Datum:&nbsp;
             <span style="font-weight: 200;">
-              <span @click="applyFilter" class="btn" style="margin: 0px;">{{ dialogData.date.substring(0, 4) }}</span>
+              <span @click="applyFilter('date', dialogData.date.substring(0, 4))" class="btn" style="margin: 0px;">{{ dialogData.date.substring(0, 4) }}</span>
               <span v-if="dialogData.date.length > 4">{{ dialogData.date.substring(4) }}</span>
             </span>
             /&nbsp;Anzahl Seiten:&nbsp;
-            <span @click="applyFilter" class="btn" style="margin: 0px;">{{ dialogData.pages }}</span>
+            <span @click="applyFilter('pages', dialogData.pages)" class="btn" style="margin: 0px;">{{ dialogData.pages }}</span>
           </span>
         </v-row>
         <v-row>
@@ -219,6 +219,13 @@ export default {
       this.dialogData = this.search.getById(id);
       this.dialog = true;
     },
+    applyFilter(key, value) {
+      const params = new URLSearchParams(window.location.search);
+      params.set(key, value);
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.pushState({}, '', newUrl);
+      window.location.reload();
+    }
   }
 }
 </script>
