@@ -43,7 +43,7 @@
       </v-row>
       <v-row>
         <div style="margin-left: auto; margin-right: auto;">
-          <img :src="`thumbnail/${source.id}.jpg`" alt="Aktenstapel - Symbolbild" v-if="source.has_fulltext"
+          <img :src="`/plus/idsgg/thumbnail/${source.id}.jpg`" alt="Aktenstapel - Symbolbild" v-if="source.has_fulltext"
             style="min-height: 200px; max-height: 200px; max-width: 280px; padding: 10px;" loading="lazy" />
           <v-icon v-else style="min-height: 200px; font-size: 128px;">mdi-note-text-outline</v-icon>
         </div>

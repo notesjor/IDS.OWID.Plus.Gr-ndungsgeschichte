@@ -99,12 +99,12 @@ export default {
   data() {
     return {
       items: [
-        { name: 'TSV-Liste verknüpfter Institute', size: '7', unit: 'KB', url: 'data/list_company.tsv', desc: 'Die Liste umfasst neben dem Namen auch die Stadt, sowie GND/Wikidata-IDs' },
-        { name: 'TSV-Liste verknüpfter Personen', size: '34', unit: 'KB', url: 'data/list_persons.tsv', desc: 'Die Basis-Daten zu den verknüpften Personen, inkl. GND/Wikidata-IDs' },
-        { name: 'TSV-Liste digitalisierter Dokumente', size: '126', unit: 'KB', url: 'data/list_documents.tsv', desc: 'Diese Liste ist die Datengrundlage für die Funktion: "Findebuch"' },
-        { name: 'Digitalisate (PDF-Scans)', size: '301', unit: 'MB', url: 'data/Digitalisate_PDF.zip', desc: 'PDF-Dokumente der digitalisierten Dokumente - nur Bilddaten' },
-        { name: 'Digitalisate (TXT-Dateien)', size: '522', unit: 'KB', url: 'data/Digitalisate_TXT.zip', desc: 'OCR-Erkannter Plaintext (Leptonica / Tesseract OCR) - Rohtext' },
-        { name: 'Korpus (verschiedene Formate)', size: '13', unit: 'MB', url: 'data/KorpusDaten.zip', desc: 'Korpusdaten in den Formaten: I5, KorAP, CorpusExplorer, CoNLL, TCF, CWB, SketchEngine, TreeTagger, WebLicht, R' }
+        { name: 'TSV-Liste verknüpfter Institute', size: '7', unit: 'KB', url: '/plus/idsgg/data/list_company.tsv', desc: 'Die Liste umfasst neben dem Namen auch die Stadt, sowie GND/Wikidata-IDs' },
+        { name: 'TSV-Liste verknüpfter Personen', size: '34', unit: 'KB', url: '/plus/idsgg/data/list_persons.tsv', desc: 'Die Basis-Daten zu den verknüpften Personen, inkl. GND/Wikidata-IDs' },
+        { name: 'TSV-Liste digitalisierter Dokumente', size: '126', unit: 'KB', url: '/plus/idsgg/data/list_documents.tsv', desc: 'Diese Liste ist die Datengrundlage für die Funktion: "Findebuch"' },
+        { name: 'Digitalisate (PDF-Scans)', size: '301', unit: 'MB', url: '/plus/idsgg/data/Digitalisate_PDF.zip', desc: 'PDF-Dokumente der digitalisierten Dokumente - nur Bilddaten' },
+        { name: 'Digitalisate (TXT-Dateien)', size: '522', unit: 'KB', url: '/plus/idsgg/data/Digitalisate_TXT.zip', desc: 'OCR-Erkannter Plaintext (Leptonica / Tesseract OCR) - Rohtext' },
+        { name: 'Korpus (verschiedene Formate)', size: '13', unit: 'MB', url: '/plus/idsgg/data/KorpusDaten.zip', desc: 'Korpusdaten in den Formaten: I5, KorAP, CorpusExplorer, CoNLL, TCF, CWB, SketchEngine, TreeTagger, WebLicht, R' }
       ],
     }
   },

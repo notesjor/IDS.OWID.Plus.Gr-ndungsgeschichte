@@ -27,7 +27,7 @@
 
   <v-row style="max-width:80ch; margin-left:auto; margin-right:auto;">
     <v-col cols="4">
-      <a href="/search" style="cursor: pointer;">
+      <a href="/plus/idsgg/search" style="cursor: pointer;">
         <div
           style="border:1px #ccc solid; border-radius: 5px; padding: 10px; background-color: rgba(0, 0, 0, 0.05); margin-top:10px">
           <div style="text-align: center;">
@@ -41,7 +41,7 @@
       </a>
     </v-col>
     <v-col cols="4">
-      <a href="/browse" style="cursor: pointer;">
+      <a href="/plus/idsgg/browse" style="cursor: pointer;">
         <div
           style="border:1px #ccc solid; border-radius: 5px; padding: 10px; background-color: rgba(0, 0, 0, 0.05); margin-top:10px">
           <div style="text-align: center;">
@@ -55,7 +55,7 @@
       </a>
     </v-col>
     <v-col cols="4">
-      <a href="/download" style="cursor: pointer;">
+      <a href="/plus/idsgg/data" style="cursor: pointer;">
         <div
           style="border:1px #ccc solid; border-radius: 5px; padding: 10px; background-color: rgba(0, 0, 0, 0.05); margin-top:10px">
           <div style="text-align: center;">

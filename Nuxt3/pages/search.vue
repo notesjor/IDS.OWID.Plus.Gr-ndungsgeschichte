@@ -82,10 +82,10 @@
         </v-row>
         <v-row>
           <v-col cols="3">
-            <img :src="`thumbnail/${dialogData.id}.jpg`" alt="Bild auf oberstem Blatt"
+            <img :src="`/plus/idsgg/thumbnail/${dialogData.id}.jpg`" alt="Bild auf oberstem Blatt"
               style="max-height: 300px; max-width: 480px; margin-left:auto; margin-right: auto;" />
             <v-btn prepend-icon="mdi-download-circle-outline" style="margin:5px 0px" v-if="dialogData.has_fulltext"
-              :href="`fulltext/${dialogData.id}.pdf`">
+              :href="`/plus/idsgg/fulltext/${dialogData.id}.pdf`">
               Download</v-btn>
           </v-col>
           <v-col cols="1"></v-col>
