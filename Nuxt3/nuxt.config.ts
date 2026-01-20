@@ -32,8 +32,9 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      appName: "OWID-Nuxt3-Template",
-      appDescription: "lorem ipsum dolor sit amet",
+      appName: "Gründungsgeschichte",
+
+      langCode: "de",
 
       leftIconHref: "https://www.owid.de/plus/index.html",
       rightIconHref: "https://www.ids-mannheim.de/",
@@ -45,7 +46,11 @@ export default defineNuxtConfig({
   },
 
   app: {
-    baseURL: "/plus/idsgg"
+    baseURL: "/plus/idsgg",
+    head: {
+      title: "Gründungsgeschichte",
+      htmlAttrs: { lang: "de" }
+    }
   },
 
   compatibilityDate: "2024-12-04"

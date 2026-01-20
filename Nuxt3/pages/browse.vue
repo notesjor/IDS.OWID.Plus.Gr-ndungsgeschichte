@@ -8,10 +8,8 @@
     </v-col>
   </v-row>
   <v-row>
-    <v-col cols="2" style="padding: 0px 30px 0px 20px;">
-    </v-col>
-    <v-col cols="9" style="margin:-15px 0px 0px -15px">
-      <v-row>
+    <v-col style="margin:-15px 0px 0px -15px">
+      <v-row style="margin:0px 50px 0px 50px">
         <v-col cols="4">
           <v-card class="mx-auto" prepend-icon="mdi-domain" subtitle="Referenzierte Institution im Findebuch"
             width="400">
@@ -94,7 +92,6 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-col></v-col>
   </v-row>
 </template>
 

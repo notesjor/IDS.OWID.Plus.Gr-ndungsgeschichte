@@ -1,9 +1,12 @@
 <template>
   <v-app>
     <v-app-bar app theme="dark" class="d-print-none" style="z-index: 99999999">
-      <div>
+      <div style="display: flex; align-items: center; margin:40px 0px 0px 0px;">
         <a :href="leftIconHref" target="_blank">
-          <img alt="Logo" src="/logo_left.svg" style="min-height:40px; margin-left:10px" />
+          <!--<img alt="Logo" src="/idsgg.png" style="max-height:40px; margin-left:10px; float: left;" />-->
+          <v-icon size="48" style="float: left;">mdi-folder-open-outline</v-icon>
+          <span style="margin:0px 0px 0px 10px; float:left">IDS-Gründungsgeschichte</span><br/>
+          <span style="margin:-30px 0px 0px 10px; float: left;">Dokumente aus der frühen Gründungsphase des Instituts (1963–1970)</span>
         </a>
       </div>
 
@@ -11,7 +14,7 @@
 
       <div>
         <a :href="rightIconHref" target="_blank">
-          <img alt="Logo" src="/logo_right.svg" style="min-height:70px" />
+          <img alt="Logo" src="/logo_right.svg" style="min-height:70px" />          
         </a>
       </div>
     </v-app-bar>   
@@ -65,7 +68,6 @@ export default {
   data() {
     return {
       appName: null,
-      appDescription: null,
 
       leftIconHref: null,
       rightIconHref: null,
@@ -78,7 +80,6 @@ export default {
 
   mounted() {
     this.appName = this.$config.public.appName;
-    this.appDescription = this.$config.public.appDescription;
 
     this.leftIconHref = this.$config.public.leftIconHref;
     this.rightIconHref = this.$config.public.rightIconHref;
