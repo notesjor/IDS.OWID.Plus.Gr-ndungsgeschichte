@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "cytoscape": "^3.33.1",
+    "cytoscape-cose-bilkent": "^4.1.0",
     "flexsearch": "^0.8.212",
     "pinia": "^2.3.1",
     "vuetify": "^3.11.6"

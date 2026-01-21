@@ -39,8 +39,7 @@ useHead({
     <v-col cols="9" style="margin:-15px 0px 0px -15px">
 
       <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-start;">
-        <div v-if="loading"
-          style="position:absolute; inset:1; display:flex; align-items:center; 
+        <div v-if="loading" style="position:absolute; inset:1; display:flex; align-items:center; 
           justify-content:center; background-color: rgba(255,255,255,0.85); z-index: 999;
           margin-left: auto; margin-right: auto;">
           <div class="d-flex flex-column align-center justify-center"
@@ -119,7 +118,11 @@ useHead({
           </v-col>
         </v-row>
         <v-row style="margin-top:30px">
-          Verknüpfte Entitäten:
+          Verknüpfte Entitäten (Visualisierung):
+          <div ref="cy" style="width:100%; height:420px; border:1px solid #eee; border-radius:6px;"></div>
+        </v-row>
+        <v-row style="margin-top:30px">
+          Verknüpfte Entitäten (Liste mit Zusatzangaben):
           <v-expansion-panels variant="accordion">
             <v-expansion-panel v-if="dialogData.persons_author?.length > 0">
               <v-expansion-panel-title>
@@ -172,7 +175,7 @@ useHead({
               </v-expansion-panel-text>
             </v-expansion-panel>
           </v-expansion-panels>
-        </v-row>
+        </v-row>        
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -180,6 +183,19 @@ useHead({
 
 <script>
 import { useSearchStore } from '~/stores/search';
+
+import cytoscape from 'cytoscape';
+import coseBilkent from 'cytoscape-cose-bilkent';
+import {
+  mdiMapMarkerRadiusOutline,
+  mdiFileSign,
+  mdiEmailNewsletter,
+  mdiCommentAccountOutline,
+  mdiDomain,
+  mdiLinkBoxVariantOutline
+} from '@mdi/js';
+
+cytoscape.use(coseBilkent);
 
 export default {
   data() {
@@ -191,6 +207,8 @@ export default {
       dialogData: {},
       panels: [],
       loading: false,
+
+      cyInstance: null
     }
   },
   mounted() {
@@ -242,6 +260,174 @@ export default {
       this.dialogData = this.search.getById(id);
       this.dialog = true;
     },
+    // Hilfsfunktion: SVG aus mdi-Pfad erzeugen und als data-uri zurückgeben
+    mdiToDataUri(path, size = 48, color = '#222') {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24"><path fill="${encodeURIComponent(color)}" d="${path}"/></svg>`;
+      return `data:image/svg+xml;charset=utf8,${encodeURIComponent(svg)}`;
+    },
+
+    // Initialisiert / (re)drawt den Cytoscape-Graphen für das aktuelle dialogData
+    initGraph() {
+      if (!this.dialogData || !this.$refs.cy) return;
+
+      // zerstöre alten Graphen
+      if (this.cyInstance) {
+        this.cyInstance.destroy();
+        this.cyInstance = null;
+      }
+
+      const elements = [];
+      const centerId = `doc-${this.dialogData.id}`;
+
+      // Zentrum: aktuelles Dokument
+      elements.push({
+        data: {
+          id: centerId,
+          label: `${this.dialogData.archive_rack}/${this.dialogData.archive_folder}/${this.dialogData.archive_document}`,
+          type: 'document_center',
+          icon: this.mdiToDataUri(mdiMapMarkerRadiusOutline, 56, '#0f172a')
+        }
+      });
+
+      // Personen: authors / recipients / referenced (icon abhängig von Rolle)
+      const addPersonNodes = (arr, roleKey, iconPath) => {
+        if (!Array.isArray(arr)) return;
+        arr.forEach((p, idx) => {
+          // p kann ein String (Name) oder Objekt sein; handle beide Fälle
+          const name = typeof p === 'string' ? p : p.name || p.label || JSON.stringify(p);
+          const pid = `person-${roleKey}-${idx}-${name}`.replace(/\s+/g, '_');
+          elements.push({
+            data: {
+              id: pid,
+              label: name,
+              type: 'person',
+              role: roleKey,
+              icon: this.mdiToDataUri(iconPath, 56, '#064E3B')
+            }
+          });
+          elements.push({ data: { id: `${centerId}-${pid}`, source: centerId, target: pid } });
+        });
+      };
+
+      addPersonNodes(this.dialogData.persons_author, 'persons_author', mdiFileSign);
+      addPersonNodes(this.dialogData.persons_recipient, 'persons_recipient', mdiEmailNewsletter);
+      addPersonNodes(this.dialogData.persons_referenced, 'persons_referenced', mdiCommentAccountOutline);
+
+      // Institutionen
+      if (Array.isArray(this.dialogData.referenced_companies)) {
+        this.dialogData.referenced_companies.forEach((c, i) => {
+          const name = typeof c === 'string' ? c : c.name || c.label || JSON.stringify(c);
+          const cid = `company-${i}-${name}`.replace(/\s+/g, '_');
+          elements.push({
+            data: { id: cid, label: name, type: 'company', icon: this.mdiToDataUri(mdiDomain, 56, '#0B5FFF') }
+          });
+          elements.push({ data: { id: `${centerId}-${cid}`, source: centerId, target: cid } });
+        });
+      }
+
+      // Referenzierte Dokumente
+      if (Array.isArray(this.dialogData.referenced_documents)) {
+        this.dialogData.referenced_documents.forEach((d, i) => {
+          // nehme an, d enthält ein id oder title/label
+          const label = d.title || d.archive_document || d.id || String(d);
+          const did = `refdoc-${i}-${label}`.replace(/\s+/g, '_');
+          elements.push({
+            data: { id: did, label, type: 'document_ref', refId: d.id || d, icon: this.mdiToDataUri(mdiLinkBoxVariantOutline, 56, '#6B21A8') }
+          });
+          elements.push({ data: { id: `${centerId}-${did}`, source: centerId, target: did } });
+        });
+      }
+
+      // Erzeuge Cytoscape
+      this.cyInstance = cytoscape({
+        container: this.$refs.cy,
+        elements,
+        style: [
+          {
+            selector: 'node',
+            style: {
+              'background-color': '#fff',
+              'background-fit': 'contain',
+              'background-image': 'data(icon)',
+              'border-color': '#e5e7eb',
+              'border-width': 1,
+              'width': 56,
+              'height': 56,
+              'padding': 6,
+              'shape': 'ellipse',
+              'label': 'data(label)',
+              'text-valign': 'bottom',
+              'text-halign': 'center',
+              'text-margin-y': 6,
+              'font-size': 14,
+              'text-wrap': 'wrap',
+              'text-max-width': 80
+            }
+          },
+          {
+            selector: 'edge',
+            style: {
+              'width': 2,
+              'line-color': '#e5e7eb',
+              'curve-style': 'bezier',
+              'target-arrow-shape': 'none'
+            }
+          },
+          {
+            selector: '[type = "document_center"]',
+            style: {
+              'background-color': '#fff',
+              'width': 70,
+              'height': 70,
+              'font-weight': 600
+            }
+          }
+        ],
+        layout: {
+          name: 'cose-bilkent',
+          nodeDimensionsIncludeLabels: true,
+          animate: true,
+          idealEdgeLength: 80,
+          nodeRepulsion: 8000,
+          gravity: 0.4
+        }
+      });
+
+      // Klick-Handling: führt applyFilter mit dem passenden key/value aus
+      this.cyInstance.on('tap', 'node', (evt) => {
+        const d = evt.target.data();
+        if (!d) return;
+
+        if (d.type === 'document_center') {
+          // bei Klick auf das Zentrum: nimm Dokument-ID und öffne Details (z.B. reload oder neue Suche)
+          this.showItemDialog(this.dialogData.id);
+          return;
+        }
+
+        if (d.type === 'person') {
+          // Rolle bestimmt den rkey
+          const rkey = d.role || 'persons_referenced';
+          this.applyFilter(rkey, d.label);
+          return;
+        }
+
+        if (d.type === 'company') {
+          this.applyFilter('referenced_companies', d.label);
+          return;
+        }
+
+        if (d.type === 'document_ref') {
+          // wenn refId vorhanden, filter nach id sonst nach label
+          const val = d.refId || d.label;
+          this.applyFilter('referenced_documents', val);
+          return;
+        }
+      });
+
+      // Zoom und Pan anfänglich passend setzen
+      this.cyInstance.fit(50);
+    },
+
     applyFilter(key, value) {
       const params = new URLSearchParams(window.location.search);
       console.log(window.location.pathname);
@@ -249,6 +435,20 @@ export default {
       const newUrl = `/plus/idsgg/search?${params.toString()}`;
       window.history.pushState({}, '', newUrl);
       window.location.reload();
+    }
+  },
+
+  watch: {
+    dialog(val) {
+      if (val) {
+        // Dialog geöffnet -> Graph initialisieren nachdem DOM aktualisiert wurde
+        this.$nextTick(() => this.initGraph());
+      } else {
+        if (this.cyInstance) {
+          this.cyInstance.destroy();
+          this.cyInstance = null;
+        }
+      }
     }
   }
 }
