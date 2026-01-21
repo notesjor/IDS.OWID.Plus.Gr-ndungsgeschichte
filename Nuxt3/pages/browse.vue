@@ -207,13 +207,16 @@ export default {
       return this.keyword_sort == "frequ" ? "border-bottom: 1px solid #000;" : "";
     },
     counter_company_filtred() {
-      return this.filter(this.counter_company, this.company_filter);
+      void Object.keys(this.counter_company).length;
+      return { ...this.filter(this.counter_company, this.company_filter) };
     },
     counter_persons_filtred() {
-      return this.filter(this.counter_persons, this.persons_filter);
+      void Object.keys(this.counter_persons).length;
+      return { ...this.filter(this.counter_persons, this.persons_filter) };
     },
     counter_keyword_filtred() {
-      return this.filter(this.counter_keyword, this.keyword_filter);
+      void Object.keys(this.counter_keyword).length;
+      return { ...this.filter(this.counter_keyword, this.keyword_filter) };
     },
   }
 }

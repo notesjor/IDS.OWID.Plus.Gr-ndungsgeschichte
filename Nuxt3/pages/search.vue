@@ -4,7 +4,6 @@ useHead({
 })
 </script>
 
-
 <template>
   <v-row>
     <v-col style="max-width:80ch; margin-left:auto; margin-right:auto;">
@@ -24,7 +23,7 @@ useHead({
     </v-col>
   </v-row>
   <v-row>
-    <v-col cols="3" style="padding: 0px 30px 0px 20px;">
+    <v-col cols="3" style="padding: 0px 30px 0px 20px; position: sticky; top: 80px; align-self: start;">
       <v-expansion-panels v-model="panels" multiple v-if="search != null">
         <searchBox @changed="reload" title="Regal-Nummer" rkey="archive_rack" />
         <searchBox @changed="reload" title="Ordner-Name" rkey="archive_folder_name" />
@@ -40,8 +39,20 @@ useHead({
     <v-col cols="9" style="margin:-15px 0px 0px -15px">
 
       <div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-start;">
-        <div v-for="(v, k) in esResults" :key="k">
-          <paperstack :source="v" @callback="showItemDialog" />
+        <div v-if="loading"
+          style="position:absolute; inset:1; display:flex; align-items:center; 
+          justify-content:center; background-color: rgba(255,255,255,0.85); z-index: 999;
+          margin-left: auto; margin-right: auto;">
+          <div class="d-flex flex-column align-center justify-center"
+            style="padding:20px; background:white; border-radius:6px; box-shadow:0 2px 12px rgba(0,0,0,0.12);">
+            <v-icon :size="60" class="mb-4">mdi-magnify</v-icon>
+            <div>Daten werden geladen...</div>
+          </div>
+        </div>
+        <div v-show="!loading" style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-start;" id="results">
+          <div v-for="(v, k) in esResults" :key="k">
+            <paperstack :source="v" @callback="showItemDialog" />
+          </div>
         </div>
       </div>
     </v-col>
@@ -165,14 +176,6 @@ useHead({
       </v-card-text>
     </v-card>
   </v-dialog>
-
-  <v-dialog v-model="loading" persistent>
-    <div class="d-flex flex-column align-center justify-center"
-      style="width:110%; background-color: white; margin:20px 0px 20px -25px; padding: 20px 0px">
-      <v-progress-circular indeterminate :size="60" class="mb-4" />
-      <div>Daten werden geladen...</div>
-    </div>
-  </v-dialog>
 </template>
 
 <script>
@@ -233,7 +236,7 @@ export default {
       setTimeout(() => {
         this.esResults = this.search.getCurrentData();
         this.loading = false;
-      }, 200);
+      }, 1);
     },
     showItemDialog(id) {
       this.dialogData = this.search.getById(id);

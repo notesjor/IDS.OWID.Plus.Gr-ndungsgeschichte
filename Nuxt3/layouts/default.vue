@@ -3,7 +3,7 @@
     <v-app-bar app theme="dark" class="d-print-none" style="z-index: 99999999">
       <div style="display: flex; align-items: center; margin:40px 0px 0px 0px;">
         <a :href="leftIconHref" target="_blank">
-          <!--<img alt="Logo" src="/idsgg.png" style="max-height:40px; margin-left:10px; float: left;" />-->          
+          <!--<img alt="Logo" src="/idsgg.png" style="max-height:40px; margin-left:10px; float: left;" />-->
           <div style="margin:-40px 0px 0px 10px; font-weight: 500;">IDS-Gründungsgeschichte</div><br />
           <div style="margin:-30px 0px 0px 10px; font-weight: 200;">
             Dokumente aus der frühen Gründungsphase des Instituts (1963–1970)
@@ -20,13 +20,14 @@
       </div>
     </v-app-bar>
 
-    <v-navigation-drawer expand-on-hover rail>
-      <v-list role="navigation" aria-label="Hauptnavigation">
-        <v-list-item href="/plus/idsgg/" title="Übersicht" prepend-icon="mdi-home"/>
-        <v-list-item href="/plus/idsgg/search" title="Findebuch" prepend-icon="mdi-text-box-search-outline"/>
-        <v-list-item href="/plus/idsgg/browse" title="Verzeichnis" prepend-icon="mdi-file-cabinet"/>
-        <v-list-item href="/plus/idsgg/data" title="Daten" prepend-icon="mdi-download"/>
-        <v-list-item href="/plus/idsgg/team" title="Projektteam" prepend-icon="mdi-account-group-outline"/>
+    <v-navigation-drawer app expand-on-hover rail>
+      <v-list>
+        <v-list-item href="/plus/idsgg/" title="Übersicht" prepend-icon="mdi-home"></v-list-item>
+        <v-list-item href="/plus/idsgg/search" title="Findebuch"
+          prepend-icon="mdi-text-box-search-outline"></v-list-item>
+        <v-list-item href="/plus/idsgg/browse" title="Verzeichnis" prepend-icon="mdi-file-cabinet"></v-list-item>
+        <v-list-item href="/plus/idsgg/data" title="Daten" prepend-icon="mdi-download"></v-list-item>
+        <v-list-item href="/plus/idsgg/team" title="Projektteam" prepend-icon="mdi-account-group-outline"></v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -34,7 +35,7 @@
       <slot />
     </v-main>
 
-    <v-footer theme="dark"
+    <v-footer app theme="dark"
       style="z-index: 99999999; max-height: 80px; position: absolute; bottom: 0; width: 100%; padding-left:25px; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 100%; gap: 0px 0px; grid-template-areas: 'left middle right';">
       <div style="color:white; grid-area: left; margin-top: 20px; font-size: 12px;">
         <img alt="Logo" src="/owid-logo-dunkel.svg" style="max-height:15px; margin:-10px 0px 3px 0px" float="left" />
