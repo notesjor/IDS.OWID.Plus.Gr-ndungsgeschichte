@@ -1,14 +1,21 @@
 <template>
   <v-app>
     <v-app-bar app theme="dark" class="d-print-none" style="z-index: 99999999">
-      <div style="display: flex; align-items: center; margin:40px 0px 0px 0px;">
-        <a :href="leftIconHref" target="_blank">
-          <!--<img alt="Logo" src="/idsgg.png" style="max-height:40px; margin-left:10px; float: left;" />-->
-          <div style="margin:-40px 0px 0px 10px; font-weight: 500;">IDS-Gründungsgeschichte</div><br />
-          <div style="margin:-30px 0px 0px 10px; font-weight: 200;">
-            Dokumente aus der frühen Gründungsphase des Instituts (1963–1970)
-          </div>
-        </a>
+      <div style="margin:0px 0px 0px 0px; min-height: 70px;">
+        <v-row>
+          <v-col>
+            <div style="font-weight: 500; margin: 10px 0px 0px 10px">
+              IDS-Gründungsgeschichte
+            </div>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <div style="font-weight: 100; margin: -30px 0px 0px 10px">
+              Dokumente aus der frühen Gründungsphase des Instituts (1963–1970)
+            </div>
+          </v-col>
+        </v-row>
       </div>
 
       <v-spacer></v-spacer>
@@ -20,7 +27,7 @@
       </div>
     </v-app-bar>
 
-    <v-navigation-drawer app expand-on-hover rail>
+    <v-navigation-drawer expand-on-hover permanent rail>
       <v-list>
         <v-list-item href="/plus/idsgg/" title="Übersicht" prepend-icon="mdi-home"></v-list-item>
         <v-list-item href="/plus/idsgg/search" title="Findebuch"
@@ -35,10 +42,9 @@
       <slot />
     </v-main>
 
-    <v-footer app theme="dark"
+    <v-footer theme="dark"
       style="z-index: 99999999; max-height: 80px; position: absolute; bottom: 0; width: 100%; padding-left:25px; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 100%; gap: 0px 0px; grid-template-areas: 'left middle right';">
-      <div style="color:white; grid-area: left; margin-top: 20px; font-size: 12px;">
-        <img alt="Logo" src="/owid-logo-dunkel.svg" style="max-height:15px; margin:-10px 0px 3px 0px" float="left" />
+      <div style="color:white; grid-area: left; margin-top: 0px; font-size: 12px;">
         <div>
           <a style="color: #fff" :href="footerContact">Kontakt</a>
           &middot;
@@ -70,6 +76,7 @@ export default {
   data() {
     return {
       appName: null,
+      appDescription: null,
 
       leftIconHref: null,
       rightIconHref: null,
@@ -82,6 +89,7 @@ export default {
 
   mounted() {
     this.appName = this.$config.public.appName;
+    this.appDescription = this.$config.public.appDescription;
 
     this.leftIconHref = this.$config.public.leftIconHref;
     this.rightIconHref = this.$config.public.rightIconHref;
