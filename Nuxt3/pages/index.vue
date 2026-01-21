@@ -1,3 +1,9 @@
+<script setup>
+useHead({
+  title: "IDS‑Gründungsgeschichte: Startseite"
+})
+</script>
+
 <template>
   <projectHeader />
   <v-row style="max-width:80ch; margin-left:auto; margin-right:auto;">

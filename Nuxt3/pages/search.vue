@@ -1,7 +1,18 @@
+<script setup>
+useHead({
+  title: "IDS‑Gründungsgeschichte: Findebuch"
+})
+</script>
+
+
 <template>
-  <projectHeader />
   <v-row>
-    <v-col style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 2rem;">
+    <v-col style="max-width:80ch; margin-left:auto; margin-right:auto;">
+      <h1 style="margin-top:1rem">Findebuch</h1>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 2rem; margin-top: -20px;">
       Das Findebuch umfasst alle Texte des IDS-Vorstandsarchivs der Jahre 1963–1970. Auf der linken Seite finden Sie
       verschiedene Facetten, über die Sie gezielt suchen können. Jeder gefundene Eintrag verweist auf wichtige Metriken
       wie Datum, Texttyp, Sigle oder Seitenanzahl. Unten in der Fußleiste jedes Eintrags sehen Sie außerdem, wie viele
@@ -77,7 +88,7 @@
             </span>
             /&nbsp;Anzahl Seiten:&nbsp;
             <span @click="applyFilter('pages', dialogData.pages)" class="btn" style="margin: 0px;">{{ dialogData.pages
-              }}</span>
+            }}</span>
           </span>
         </v-row>
         <v-row>

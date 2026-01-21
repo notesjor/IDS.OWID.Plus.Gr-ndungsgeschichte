@@ -1,7 +1,17 @@
+<script setup>
+useHead({
+  title: "IDS‑Gründungsgeschichte: Verzeichnis"
+})
+</script>
+
 <template>
-  <projectHeader />
   <v-row>
-    <v-col style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 2rem;">
+    <v-col style="max-width:80ch; margin-left:auto; margin-right:auto;">
+      <h1 style="margin-top:1rem">Verzeichnis</h1>
+    </v-col>
+  </v-row>
+  <v-row>
+    <v-col style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 2rem; margin-top: -20px;">
       Kurzbeschreibung: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita reiciendis beatae velit quod
       tempora magni corrupti unde alias, excepturi nulla maxime atque, cum neque quibusdam minus amet eveniet
       repellendus deleniti?

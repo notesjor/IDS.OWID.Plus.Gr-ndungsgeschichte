@@ -1,3 +1,9 @@
+<script setup>
+useHead({
+  title: "IDS‑Gründungsgeschichte: Team"
+})
+</script>
+
 <template>
   <projectHeader/>
   <div style="max-width: 80ch; margin-left: auto; margin-right: auto;">

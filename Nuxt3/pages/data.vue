@@ -1,6 +1,16 @@
+<script setup>
+useHead({
+  title: "IDS‑Gründungsgeschichte: Daten"
+})
+</script>
+
 <template>
-  <projectHeader />
-  <div style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 0.5rem;">
+  <v-row>
+    <v-col style="max-width:80ch; margin-left:auto; margin-right:auto;">
+      <h1 style="margin:1rem 0px 1rem -13px">Daten</h1>
+    </v-col>
+  </v-row>
+  <div style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 2rem; margin-top: -20px;">
     <v-row>
       <v-col>
         Das Korpus zur Gründungsgeschichte des IDS (Leibniz-Institut für Deutsche Sprache) umfasst alle Texte, die im
@@ -9,7 +19,7 @@
         die
         historischen Dokumente digitalisiert und zugänglich gemacht werden. Dabei traten typische
         OCR-Fehler auf, wie falsch erkannte Buchstaben und Zeichen, diese wurden manuell nicht nachkorrigiert.
-        Die Digitalisate wurden manuell gesichtet und mit Meta-Daten annotiert. 
+        Die Digitalisate wurden manuell gesichtet und mit Meta-Daten annotiert.
       </v-col>
     </v-row>
     <v-row>

@@ -49,7 +49,17 @@ export default defineNuxtConfig({
     baseURL: "/plus/idsgg",
     head: {
       title: "Gründungsgeschichte",
-      htmlAttrs: { lang: "de" }
+      htmlAttrs: { lang: "de" },
+      link: [
+
+        { rel: 'preload', href: '/fonts/fira-sans/fira-sans-v11-latin-italic.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/fira-sans/fira-sans-v11-latin-regular.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/fira-sans/fira-sans-v11-latin-300italic.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/fira-sans/fira-sans-v11-latin-300.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/fira-sans/fira-sans-v11-latin-200italic.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
+        { rel: 'preload', href: '/fonts/fira-sans/fira-sans-v11-latin-200.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }
+        
+      ]
     }
   },
 
