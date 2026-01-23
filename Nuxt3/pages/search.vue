@@ -118,7 +118,8 @@ useHead({
           </v-col>
         </v-row>
         <v-row style="margin-top:30px">
-          Verknüpfte Entitäten (Visualisierung):
+          <span>Verknüpfte Entitäten (Visualisierung):</span>
+          <span style="font-size: 0.9rem; font-weight: 200;">Hinweis: Ein Doppelklick auf eine Entität filtert alle Dokumente. Graph mit Mausrand zoombar.</span>
           <div ref="cy" style="width:100%; height:420px; border:1px solid #eee; border-radius:6px;"></div>
         </v-row>
         <v-row style="margin-top:30px">
@@ -262,13 +263,15 @@ export default {
       this.dialogData = this.search.getById(id);
       this.dialog = true;
     },
-    // Hilfsfunktion: SVG aus mdi-Pfad erzeugen und als data-uri zurückgeben
-    mdiToDataUri(path, size = 48, color = '#222') {
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24"><path fill="${encodeURIComponent(color)}" d="${path}"/></svg>`;
+    // Hilfsfunktion: SVG aus mdi-Pfad erzeugen und als data-uri zurückgeben. Optional kann ein weißer Hintergrund angegeben werden.
+    mdiToDataUri(path, size = 48, color = '#222', bg = 'none') {
+      const bgRect = bg && bg !== 'none' ? `<rect width="24" height="24" fill="${bg}"/>` : '';
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24">${bgRect}<path fill="${color}" d="${path}"/></svg>`;
       return `data:image/svg+xml;charset=utf8,${encodeURIComponent(svg)}`;
     },
 
-    // Initialisiert / (re)drawt den Cytoscape-Graphen für das aktuelle dialogData
+
+    // Initialisiert / (re)drawt den Cytoscape-Graphen
     initGraph() {
       if (!this.dialogData || !this.$refs.cy) return;
 
@@ -291,52 +294,53 @@ export default {
         }
       });
 
-      // Personen: authors / recipients / referenced (icon abhängig von Rolle)
-      const addPersonNodes = (arr, roleKey, iconPath) => {
-        if (!Array.isArray(arr)) return;
+      // Gruppen/Verteilknoten: für jede Entitätstyp-Gruppe (Autor*innen, Adressat*innen, Sonst. Personen, Institutionen, Dokumente)
+      const addGroupNode = (groupKey, label, iconPath, color = '#064E3B') => {
+        const gid = `${centerId}-group-${groupKey}`;
+        elements.push({ data: { id: gid, label, type: 'group', groupKey, icon: this.mdiToDataUri(iconPath, 56, color, '#fff') } });
+        elements.push({ data: { id: `${centerId}-${gid}`, source: centerId, target: gid } });
+        return gid;
+      };
+
+      // Detail-Knoten werden ohne Icon angelegt und von den Verteilknoten abgehängt
+      const addPersonDetails = (arr, roleKey) => {
+        if (!Array.isArray(arr) || arr.length === 0) return;
+        const groupId = addGroupNode(roleKey,
+          roleKey === 'persons_author' ? 'Verfasser*innen' : roleKey === 'persons_recipient' ? 'Adressat*innen' : 'Sonstige referenzierte Personen',
+          roleKey === 'persons_author' ? mdiFileSign : roleKey === 'persons_recipient' ? mdiEmailNewsletter : mdiCommentAccountOutline,
+          '#000'
+        );
         arr.forEach((p, idx) => {
-          // p kann ein String (Name) oder Objekt sein; handle beide Fälle
           const name = typeof p === 'string' ? p : p.name || p.label || JSON.stringify(p);
-          const pid = `person-${roleKey}-${idx}-${name}`.replace(/\s+/g, '_');
-          elements.push({
-            data: {
-              id: pid,
-              label: name,
-              type: 'person',
-              role: roleKey,
-              icon: this.mdiToDataUri(iconPath, 56, '#064E3B')
-            }
-          });
-          elements.push({ data: { id: `${centerId}-${pid}`, source: centerId, target: pid } });
+          const pid = `person-detail-${roleKey}-${idx}-${name}`.replace(/\s+/g, '_');
+          elements.push({ data: { id: pid, label: name, type: 'person_detail', rkey: roleKey } });
+          elements.push({ data: { id: `${groupId}-${pid}`, source: groupId, target: pid } });
         });
       };
 
-      addPersonNodes(this.dialogData.persons_author, 'persons_author', mdiFileSign);
-      addPersonNodes(this.dialogData.persons_recipient, 'persons_recipient', mdiEmailNewsletter);
-      addPersonNodes(this.dialogData.persons_referenced, 'persons_referenced', mdiCommentAccountOutline);
+      addPersonDetails(this.dialogData.persons_author, 'persons_author');
+      addPersonDetails(this.dialogData.persons_recipient, 'persons_recipient');
+      addPersonDetails(this.dialogData.persons_referenced, 'persons_referenced');
 
       // Institutionen
-      if (Array.isArray(this.dialogData.referenced_companies)) {
+      if (Array.isArray(this.dialogData.referenced_companies) && this.dialogData.referenced_companies.length > 0) {
+        const groupId = addGroupNode('referenced_companies', 'Referenzierte Institutionen', mdiDomain, '#000');
         this.dialogData.referenced_companies.forEach((c, i) => {
           const name = typeof c === 'string' ? c : c.name || c.label || JSON.stringify(c);
-          const cid = `company-${i}-${name}`.replace(/\s+/g, '_');
-          elements.push({
-            data: { id: cid, label: name, type: 'company', icon: this.mdiToDataUri(mdiDomain, 56, '#0B5FFF') }
-          });
-          elements.push({ data: { id: `${centerId}-${cid}`, source: centerId, target: cid } });
+          const cid = `company-detail-${i}-${name}`.replace(/\s+/g, '_');
+          elements.push({ data: { id: cid, label: name, type: 'company_detail', rkey: 'referenced_companies' } });
+          elements.push({ data: { id: `${groupId}-${cid}`, source: groupId, target: cid } });
         });
       }
 
       // Referenzierte Dokumente
-      if (Array.isArray(this.dialogData.referenced_documents)) {
+      if (Array.isArray(this.dialogData.referenced_documents) && this.dialogData.referenced_documents.length > 0) {
+        const groupId = addGroupNode('referenced_documents', 'Referenzierte Dokumente', mdiLinkBoxVariantOutline, '#000');
         this.dialogData.referenced_documents.forEach((d, i) => {
-          // nehme an, d enthält ein id oder title/label
           const label = d.title || d.archive_document || d.id || String(d);
-          const did = `refdoc-${i}-${label}`.replace(/\s+/g, '_');
-          elements.push({
-            data: { id: did, label, type: 'document_ref', refId: d.id || d, icon: this.mdiToDataUri(mdiLinkBoxVariantOutline, 56, '#6B21A8') }
-          });
-          elements.push({ data: { id: `${centerId}-${did}`, source: centerId, target: did } });
+          const did = `refdoc-detail-${i}-${label}`.replace(/\s+/g, '_');
+          elements.push({ data: { id: did, label, type: 'document_ref_detail', refId: d.id || d } });
+          elements.push({ data: { id: `${groupId}-${did}`, source: groupId, target: did } });
         });
       }
 
@@ -361,11 +365,61 @@ export default {
               'text-valign': 'bottom',
               'text-halign': 'center',
               'text-margin-y': 6,
-              'font-size': 14,
+              'font-size': 16,
               'text-wrap': 'wrap',
               'text-max-width': 80
             }
           },
+          {
+            selector: '[type = "group"]',
+            style: {
+              'background-color': '#fff',
+              'background-image': 'data(icon)',
+              'background-fit': 'contain',
+              'background-clip': 'none',
+              'background-image-opacity': 1,
+              'background-width': 56,
+              'background-height': 56,
+              'border-width': 0,
+              'width': 56,
+              'height': 56,
+              'padding': 0,
+              'shape': 'rectangle',
+              'label': 'data(label)',
+              'text-valign': 'bottom',
+              'text-halign': 'center',
+              'text-margin-y': 6,
+              'font-size': 16,
+              'text-wrap': 'wrap',
+              'text-max-width': 140
+            }
+          },
+          {
+            selector: '[type = "person_detail"], [type = "company_detail"], [type = "document_ref_detail"]',
+            style: {
+              'background-image': 'none',
+              'background-color': '#fff',
+              'background-opacity': 1,
+              'border-color': '#e5e7eb',
+              'border-width': 1,
+              'width': 'label',
+              'height': 'label',
+              'padding': 8,
+              'shape': 'roundrectangle',
+              'label': 'data(label)',
+              'text-valign': 'center',
+              'text-halign': 'center',
+              'text-margin-y': 0,
+              'font-size': 16,
+              'text-wrap': 'wrap',
+              'text-max-width': 240,
+              'color': '#000',
+              'cursor': 'pointer'
+            }
+          },
+
+
+
           {
             selector: 'edge',
             style: {
@@ -401,13 +455,38 @@ export default {
         if (!d) return;
 
         if (d.type === 'document_center') {
-          // bei Klick auf das Zentrum: nimm Dokument-ID und öffne Details (z.B. reload oder neue Suche)
+          // bei Klick auf das Zentrum: nimm Dokument-ID und öffne Details
           this.showItemDialog(this.dialogData.id);
           return;
         }
 
+        // Klick auf Gruppen-Knoten: nichts 
+        if (d.type === 'group') {
+          return; // optional: implement expand/collapse
+        }
+
+        // Detailknoten für Personen
+        if (d.type === 'person_detail') {
+          const rkey = d.rkey || 'persons_referenced';
+          this.applyFilter(rkey, d.label);
+          return;
+        }
+
+        // Detailknoten für Institutionen
+        if (d.type === 'company_detail') {
+          this.applyFilter('referenced_companies', d.label);
+          return;
+        }
+
+        // Detailknoten für referenzierte Dokumente
+        if (d.type === 'document_ref_detail') {
+          const val = d.refId || d.label;
+          this.applyFilter('referenced_documents', val);
+          return;
+        }
+
+        // Fallback
         if (d.type === 'person') {
-          // Rolle bestimmt den rkey
           const rkey = d.role || 'persons_referenced';
           this.applyFilter(rkey, d.label);
           return;
@@ -419,7 +498,6 @@ export default {
         }
 
         if (d.type === 'document_ref') {
-          // wenn refId vorhanden, filter nach id sonst nach label
           const val = d.refId || d.label;
           this.applyFilter('referenced_documents', val);
           return;
