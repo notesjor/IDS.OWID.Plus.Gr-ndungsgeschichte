@@ -4,7 +4,7 @@
       <div style="margin:0px 0px 0px 0px; min-height: 70px;">
         <v-row>
           <v-col>
-            <div style="font-weight: 500; margin: 10px 0px 0px 10px">
+            <div style="font-weight: 500; margin: 13px 0px 0px 10px">
               IDS-Gründungsgeschichte
             </div>
           </v-col>

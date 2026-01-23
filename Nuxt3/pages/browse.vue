@@ -21,14 +21,16 @@ useHead({
     <v-col style="margin:-15px 0px 0px -15px">
       <v-row style="margin:0px 50px 0px 50px">
         <v-col cols="4">
-          <v-card class="mx-auto" prepend-icon="mdi-domain" subtitle="Referenzierte Institution im Findebuch"
-            width="400">
-            <template v-slot:title>
-              <span class="font-weight-black">Institutionen</span>
-            </template>
-
-            <v-card-text class="pt-4">
-              <div class="bg-surface-light p-4" style="margin: -20px -20px 10px -20px;">
+          <div class="bg-white rounded shadow-md border border-gray-100 min-h-[100px]">
+            <div style="position: sticky; top: 63px; z-index: 10; background-color: white;">
+              <div style="margin:10px 0px 10px 0px;">
+                <v-icon size="32" class="mt-4" style="margin: 0px 10px 0px 20px; float: left;">mdi-domain</v-icon>
+                <div style="margin-left: 10px; font-weight: 700; font-size: 1.1rem;">Institutionen</div>
+                <div
+                  style="margin-left: 10px; color: gray; font-weight: 200; font-size:0.9rem; margin:-3px 0px 0px -3px">
+                  Referenzierte Institution im Findebuch</div>
+              </div>
+              <div class="bg-surface-light p-4" style="margin: 0px 0px 10px 0px;">
                 <div>Sortierung:&nbsp;
                   <span @click="sort('company', 'alpha')" class="btn bg-surface-light"
                     :style="sort_co_alpha">Alphabetisch</span>
@@ -41,21 +43,25 @@ useHead({
                     style="margin: 10px 0px -20px 0px"></v-text-field>
                 </div>
               </div>
+            </div>
+            <div style="padding: 0px 20px 10px 20px;">
               <div v-for="(v, k) in counter_company_filtred" :key="k" style="text-align: left; margin-bottom: 10px;">
-                <browseCompanyItem :v="v" :k="k"/>
+                <browseCompanyItem :v="v" :k="k" />
               </div>
-            </v-card-text>
-          </v-card>
+            </div>
+          </div>
         </v-col>
         <v-col cols="4">
-          <v-card class="mx-auto" prepend-icon="mdi-account" subtitle="Beteiligte Personen im Schriftverkehr"
-            width="400">
-            <template v-slot:title>
-              <span class="font-weight-black">Personen</span>
-            </template>
-
-            <v-card-text class="pt-4">
-              <div class="bg-surface-light p-4" style="margin: -20px -20px 10px -20px;">
+          <div class="bg-white rounded shadow-md border border-gray-100 min-h-[100px]">
+            <div style="position: sticky; top: 63px; z-index: 10; background-color: white;">
+              <div style="margin:10px 0px 10px 0px;">
+                <v-icon size="32" class="mt-4" style="margin: 0px 10px 0px 20px; float: left;">mdi-account</v-icon>
+                <div style="margin-left: 10px; font-weight: 700; font-size: 1.1rem;">Personen</div>
+                <div
+                  style="margin-left: 10px; color: gray; font-weight: 200; font-size:0.9rem; margin:-3px 0px 0px -3px">
+                  Beteiligte Personen im Schriftverkehr</div>
+              </div>
+              <div class="bg-surface-light p-4" style="margin: 0px 0px 10px 0px;">
                 <div>Sortierung:&nbsp;
                   <span @click="sort('persons', 'alpha')" class="btn bg-surface-light"
                     :style="sort_pe_alpha">Alphabetisch</span>
@@ -68,20 +74,25 @@ useHead({
                     style="margin: 10px 0px -20px 0px"></v-text-field>
                 </div>
               </div>
+            </div>
+            <div style="padding: 0px 20px 10px 20px;">
               <div v-for="(v, k) in counter_persons_filtred" :key="k" style="text-align: left; margin-bottom: 10px;">
-                <browsePersonItem :v="v" :k="k"/>
+                <browsePersonItem :v="v" :k="k" />
               </div>
-            </v-card-text>
-          </v-card>
+            </div>
+          </div>
         </v-col>
         <v-col cols="4">
-          <v-card class="mx-auto" prepend-icon="mdi-tag-text" subtitle="zu Themen und Inhalten" width="400">
-            <template v-slot:title>
-              <span class="font-weight-black">Schlagworte</span>
-            </template>
-
-            <v-card-text class="pt-4">
-              <div class="bg-surface-light p-4" style="margin: -20px -20px 10px -20px;">
+          <div class="bg-white rounded shadow-md border border-gray-100 min-h-[100px]">
+            <div style="position: sticky; top: 63px; z-index: 10; background-color: white;">
+              <div style="margin:10px 0px 10px 0px;">
+                <v-icon size="32" class="mt-4" style="margin: 0px 10px 0px 20px; float: left;">mdi-tag-text</v-icon>
+                <div style="margin-left: 10px; font-weight: 700; font-size: 1.1rem;">Schlagworte</div>
+                <div
+                  style="margin-left: 10px; color: gray; font-weight: 200; font-size:0.9rem; margin:-3px 0px 0px -3px">
+                  zu Themen und Inhalten</div>
+              </div>
+              <div class="bg-surface-light p-4" style="margin: 0px 0px 10px 0px;">
                 <div>Sortierung:&nbsp;
                   <span @click="sort('keyword', 'alpha')" class="btn bg-surface-light"
                     :style="sort_kw_alpha">Alphabetisch</span>
@@ -94,15 +105,18 @@ useHead({
                     style="margin: 10px 0px -20px 0px"></v-text-field>
                 </div>
               </div>
+            </div>
+            <div style="padding: 0px 20px 10px 20px;">
               <div v-for="(v, k) in counter_keyword_filtred" :key="k" style="text-align: left; margin-bottom: 10px;">
-                <browseKeywordItem :v="v" :k="k"/>
+                <browseKeywordItem :v="v" :k="k" />
               </div>
-            </v-card-text>
-          </v-card>
+            </div>
+          </div>
         </v-col>
       </v-row>
     </v-col>
   </v-row>
+  <scrollUp />
 </template>
 
 <script>

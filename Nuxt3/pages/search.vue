@@ -179,6 +179,8 @@ useHead({
       </v-card-text>
     </v-card>
   </v-dialog>
+
+  <scrollUp />
 </template>
 
 <script>
