@@ -12,14 +12,17 @@ useHead({
   </v-row>
   <v-row>
     <v-col style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 2rem; margin-top: -20px;">
-      Das Findebuch umfasst alle Texte des IDS-Vorstandsarchivs der Jahre 1963–1970. Auf der linken Seite finden Sie
-      verschiedene Facetten, über die Sie gezielt suchen können. Jeder gefundene Eintrag verweist auf wichtige Metriken
-      wie Datum, Texttyp, Sigle oder Seitenanzahl. Unten in der Fußleiste jedes Eintrags sehen Sie außerdem, wie viele
-      Personen oder Institutionen mit dem jeweiligen Text verknüpft sind.
-      <br />
-      Texte, die Bilder enthalten, sind als Volltext verfügbar. Die computergenerierten Bilder der Textstapel vermitteln
-      zudem einen Eindruck davon, wie viele Seiten ein Dokument umfasst. Durch einen Klick auf einen Text erhalten Sie
-      zusätzliche Detailinformationen und können auch über diese Detailinformationen gezielt suchen.
+      Das Findbuch umfasst selektierte Dokumente des IDS-Vorstandsarchivs
+      der Jahre 1963–1971. Als Download zur Verfügung gestellt werden
+      ausschließlich nicht-persönliche Sachakten. Personenbezogene Dokumente
+      können nur auf Anfrage vor Ort im Gebäude des IDS in Mannheim gesichtet
+      werden. Auf der linken Seite finden Sie verschiedene Kategorien, über
+      die Sie gezielt suchen können. In der Fußleiste jedes Eintrags sehen
+      Sie, wie viele Personen oder Institutionen mit dem jeweiligen Text
+      verknüpft sind. Durch einen Klick auf einen Text erhalten Sie
+      zusätzliche Detailinformationen, wie z.B. eine grafische Anzeige der mit
+      diesem Dokument verknüpften Entitäten (Personen, Institutionen
+      etc.).
     </v-col>
   </v-row>
   <v-row>
@@ -119,7 +122,8 @@ useHead({
         </v-row>
         <v-row style="margin-top:30px">
           <span>Verknüpfte Entitäten (Visualisierung):</span>
-          <span style="font-size: 0.9rem; font-weight: 200;">Hinweis: Ein Doppelklick auf eine Entität filtert alle Dokumente. Graph mit Mausrand zoombar.</span>
+          <span style="font-size: 0.9rem; font-weight: 200;">Hinweis: Ein Doppelklick auf eine Entität filtert alle
+            Dokumente. Graph mit Mausrand zoombar.</span>
           <div ref="cy" style="width:100%; height:420px; border:1px solid #eee; border-radius:6px;"></div>
         </v-row>
         <v-row style="margin-top:30px">
@@ -176,7 +180,7 @@ useHead({
               </v-expansion-panel-text>
             </v-expansion-panel>
           </v-expansion-panels>
-        </v-row>        
+        </v-row>
       </v-card-text>
     </v-card>
   </v-dialog>

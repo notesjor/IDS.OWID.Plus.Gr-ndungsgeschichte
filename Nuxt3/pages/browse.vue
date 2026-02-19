@@ -12,9 +12,11 @@ useHead({
   </v-row>
   <v-row>
     <v-col style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 2rem; margin-top: -20px;">
-      Kurzbeschreibung: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita reiciendis beatae velit quod
-      tempora magni corrupti unde alias, excepturi nulla maxime atque, cum neque quibusdam minus amet eveniet
-      repellendus deleniti?
+      Dieses Verzeichnis listet in den Dokumenten referenzierte
+      Institutionen und Personen, die die Dokumente verfassten, in ihnen
+      adressiert waren oder erwähnt wurden. Ebenso lässt sich nach
+      thematischen Schlagworte recherchieren, die im Zuge der Archiverfassung
+      manuell vergeben wurden.
     </v-col>
   </v-row>
   <v-row>

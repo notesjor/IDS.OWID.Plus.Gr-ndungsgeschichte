@@ -8,28 +8,29 @@ useHead({
   <projectHeader />
   <v-row style="max-width:80ch; margin-left:auto; margin-right:auto;">
     <v-col>
-      Kurzbeschreibung: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita reiciendis beatae velit quod
-      tempora magni corrupti unde alias, excepturi nulla maxime atque, cum neque quibusdam minus amet eveniet
-      repellendus deleniti?
+      Das hier zur Verfügung gestellte
+      Spezialarchiv umfasst Dokumente aus
+      der Gründungs- und Frühphase des Instituts für Deutsche Sprache (IDS)
+      aus dem Zeitraum 1963 bis 1971. Die Digitalisate stammen aus dem
+      Vorstandsarchiv des IDS und wurden 2024/2025 im Rahmen eines <a href="/plus/idsgg/team">Projekts</a> zur
+      Gründungsgeschichte des IDS
+      erfasst und annotiert.
     </v-col>
   </v-row>
   <v-row style="max-width:80ch; margin-left:auto; margin-right:auto;">
     <v-col>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita reiciendis beatae velit quod
-      tempora magni corrupti unde alias, excepturi nulla maxime atque, cum neque quibusdam minus amet eveniet
-      repellendus deleniti? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita reiciendis beatae velit
-      quod
-      tempora magni corrupti unde alias, excepturi nulla maxime atque, cum neque quibusdam minus amet eveniet
-      repellendus deleniti?
+      Die vorliegende Archiverfassung bietet die
+      Möglichkeit, die komplexen
+      personellen und institutionellen Beziehungsgeflechte der
+      IDS-Gründungsphase auf einer systematisch erschlossenen, transparent
+      dokumentierten Datengrundlage zu rekonstruieren. Bei der
+      Zusammenstellung wurden nur Dokumente aus dem Gründungszeitraum
+      berücksichtigt, die von besonderer inhaltlicher Relevanz im Hinblick auf
+      die Existenzargumente, die Finanzierung und die nationale und
+      internationale (Selbst-)Positionierung des Instituts sind.
     </v-col>
   </v-row>
-  <v-row style="max-width:80ch; margin-left:auto; margin-right:auto;">
-    <v-col>
-      Kurzbeschreibung: Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita reiciendis beatae velit quod
-      tempora magni corrupti unde alias, excepturi nulla maxime atque, cum neque quibusdam minus amet eveniet
-      repellendus deleniti?
-    </v-col>
-  </v-row>
+
 
   <v-row style="max-width:80ch; margin-left:auto; margin-right:auto;">
     <v-col cols="4">
@@ -100,4 +101,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+a {
+  border-bottom: 1px dotted #000;
+}
+</style>

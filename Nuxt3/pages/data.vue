@@ -13,33 +13,42 @@ useHead({
   <div style="max-width:80ch; margin-left:auto; margin-right:auto; padding-bottom: 2rem; margin-top: -20px;">
     <v-row>
       <v-col>
-        Das Korpus zur Gründungsgeschichte des IDS (Leibniz-Institut für Deutsche Sprache) umfasst alle Texte, die im
-        Zuge
-        des Digitalisierungsprojekts erfasst wurden. Durch den Einsatz von Optical Character Recognition (OCR) konnten
-        die
-        historischen Dokumente digitalisiert und zugänglich gemacht werden. Dabei traten typische
-        OCR-Fehler auf, wie falsch erkannte Buchstaben und Zeichen, diese wurden manuell nicht nachkorrigiert.
-        Die Digitalisate wurden manuell gesichtet und mit Meta-Daten annotiert.
+        Das Korpus zur Gründungsgeschichte des IDS (Leibniz-Institut für
+        Deutsche Sprache) umfasst ausschließlich nicht-persönliche Sachakten,
+        die im Zuge des Projekts digital erfasst wurden und zugänglich gemacht
+        werden dürfen. Personenbezogene Dokumente können nur auf Anfrage vor Ort
+        im Gebäude des IDS in Mannheim gesichtet werden.
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        Durch den Einsatz von Optical Character Recognition (OCR) konnten die
+        historischen Dokumente transkribiert werden. Dabei traten typische
+        OCR-Fehler auf, wie falsch erkannte Buchstaben und Zeichen, diese wurden
+        manuell nicht nachkorrigiert. Die Digitalisate wurden manuell gesichtet
+        und mit Meta-Daten annotiert.
       </v-col>
     </v-row>
     <v-row>
       <v-col>
         Für die Texterkennung kam die Software <a href="https://github.com/tesseract-ocr/tesseract">Tesseract OCR</a>,
-        unterstützt durch <a href="https://github.com/DanBloomberg/leptonica">Leptonica</a>, zum Einsatz. Im Anschluss
-        wurden die Texte mithilfe des
-        <a href="https://notes.jan-oliver-ruediger.de/software/corpusexplorer-overview/">CorpusExplorer</a> und des
-        <a href="https://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/">TreeTagger</a> bearbeitet, aufbereitet und
-        annotiert. Diese
-        Schritte umfassen die Tokenisierung sowie die Kennzeichnung von Satzgrenzen, Wortarten (POS) und
-        Lemma-Informationen. Die finalen Texte wurden in gängige Korpus-Formate exportiert.
+        unterstützt durch <a href="https://github.com/DanBloomberg/leptonica">Leptonica</a>, zum
+        Einsatz. Im Anschluss wurden die Texte mithilfe des <a
+          href="https://notes.jan-oliver-ruediger.de/software/corpusexplorer-overview/">CorpusExplorer</a>
+        und des <a href="https://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/">TreeTagger</a>
+        bearbeitet, aufbereitet und annotiert. Diese Schritte umfassen die
+        Tokenisierung sowie die Kennzeichnung von Satzgrenzen, Wortarten (POS)
+        und Lemma-Informationen. Die finalen Texte wurden in gängige
+        Korpus-Formate exportiert.
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-        Alle Daten stehen unter der
-        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.txt">"CC BY-NC-SA 4.0"-Lizenz</a>
-        und können daher kostenfrei zur nicht-kommerziellen Forschung und Lehre genutzt werden. Falls Sie die
-        Daten nutzen, zitieren Sie bitte das Projekt entsprechend wissenschaftlicher Standards.
+        Alle Daten stehen unter der <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.txt">“CC
+          BY-NC-SA 4.0”-Lizenz</a> und können daher kostenfrei zur
+        nicht-kommerziellen Forschung und Lehre genutzt werden. Falls Sie die
+        Daten nutzen, zitieren Sie bitte das Projekt entsprechend
+        wissenschaftlicher Standards.
       </v-col>
     </v-row>
     <v-row>
@@ -53,23 +62,27 @@ useHead({
           Projektpublikation
         </div>
         <div style="margin: 0px 10px 20px 10px; font-size: 0.85rem; font-style: italic;">
-          Scholl, Stefan / Waßmer, Lea / Dang Anh, Mark / Müller-Spitzer, Carolin (in Vorbereitung): Die Frühzeit des
-          Instituts für Deutsche Sprache – Einblicke aus der Erschließung des Vorstandsarchivs. In: Deutsche Sprache.
-          Zeitschrift für Theorie, Praxis, Dokumentation (?), S. ?
+          Scholl, Stefan / Waßmer, Lea / Dang Anh, Mark / Müller-Spitzer,
+          Carolin (in Vorbereitung): Die Frühzeit des Instituts für Deutsche
+          Sprache – Einblicke aus der Erschließung des Vorstandsarchivs. In:
+          Sprachreport 2/2026.
         </div>
         <div style="font-weight: 300;">
           Datensatz
         </div>
         <div style="margin: 0px 10px 20px 10px; font-size: 0.85rem; font-style: italic;">
-          Waßmer, Lea / Rüdiger, Jan Oliver / Scholl, Stefan / Dang Anh, Mark / Müller-Spitzer, Carolin (2026):
-          IDS-Gründungsgechichte - Erschließung des Vorstandsarchivs. https://owid.de/plus/idsgg/data/.
+          Waßmer, Lea / Rüdiger, Jan Oliver / Scholl, Stefan / Dang Anh, Mark /
+          Müller-Spitzer, Carolin (2026): IDS-Gründungsgeschichte. Dokumente aus
+          der frühen Gründungsphase des Instituts (1963–1971).
+          https://owid.de/plus/idsgg/data/.
         </div>
         <div style="font-weight: 300;">
           Webapplikation
         </div>
         <div style="margin: 0px 10px 20px 10px; font-size: 0.85rem; font-style: italic;">
-          Rüdiger, Jan Oliver / Waßmer, Lea / Scholl, Stefan / Dang Anh, Mark / Müller-Spitzer, Carolin (2026):
-          IDS-Gründungsgechichte - Webapplikation. https://owid.de/plus/idsgg/.
+          Rüdiger, Jan Oliver / Waßmer, Lea / Scholl, Stefan / Dang Anh, Mark /
+          Müller-Spitzer, Carolin (2026): IDS-Gründungsgeschichte –
+          Webapplikation. https://owid.de/plus/idsgg/.
         </div>
       </v-col>
     </v-row>
@@ -111,7 +124,7 @@ export default {
       items: [
         { name: 'TSV-Liste verknüpfter Institute', size: '7', unit: 'KB', url: '/plus/idsgg/data/list_company.tsv', desc: 'Die Liste umfasst neben dem Namen auch die Stadt, sowie GND/Wikidata-IDs' },
         { name: 'TSV-Liste verknüpfter Personen', size: '34', unit: 'KB', url: '/plus/idsgg/data/list_persons.tsv', desc: 'Die Basis-Daten zu den verknüpften Personen, inkl. GND/Wikidata-IDs' },
-        { name: 'TSV-Liste digitalisierter Dokumente', size: '126', unit: 'KB', url: '/plus/idsgg/data/list_documents.tsv', desc: 'Diese Liste ist die Datengrundlage für die Funktion: "Findebuch"' },
+        { name: 'TSV-Liste digitalisierter Dokumente', size: '126', unit: 'KB', url: '/plus/idsgg/data/list_documents.tsv', desc: 'Diese Liste ist die Datengrundlage für die Funktion: “Findebuch”' },
         { name: 'Digitalisate (PDF-Scans)', size: '301', unit: 'MB', url: '/plus/idsgg/data/Digitalisate_PDF.zip', desc: 'PDF-Dokumente der digitalisierten Dokumente - nur Bilddaten' },
         { name: 'Digitalisate (TXT-Dateien)', size: '522', unit: 'KB', url: '/plus/idsgg/data/Digitalisate_TXT.zip', desc: 'OCR-Erkannter Plaintext (Leptonica / Tesseract OCR) - Rohtext' },
         { name: 'Korpus (verschiedene Formate)', size: '13', unit: 'MB', url: '/plus/idsgg/data/KorpusDaten.zip', desc: 'Korpusdaten in den Formaten: I5, KorAP, CorpusExplorer, CoNLL, TCF, CWB, SketchEngine, TreeTagger, WebLicht, R' }
