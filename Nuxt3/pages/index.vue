@@ -41,7 +41,7 @@ useHead({
             <v-icon style="font-size: 60px;">
               mdi-text-box-search-outline
             </v-icon>
-            <div><strong>Findebuch</strong><br />Durchsuchen Sie alle digitalisierten Texte und lassen Sie sich
+            <div><strong>Findbuch</strong><br />Durchsuchen Sie alle digitalisierten Texte und lassen Sie sich
               Metadaten und Volltext anzeigen.</div>
           </div>
         </div>

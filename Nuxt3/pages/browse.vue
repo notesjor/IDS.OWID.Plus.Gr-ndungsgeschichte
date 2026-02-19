@@ -30,7 +30,7 @@ useHead({
                 <div style="margin-left: 10px; font-weight: 700; font-size: 1.1rem;">Institutionen</div>
                 <div
                   style="margin-left: 10px; color: gray; font-weight: 200; font-size:0.9rem; margin:-3px 0px 0px -3px">
-                  Referenzierte Institution im Findebuch</div>
+                  Referenzierte Institution im Findbuch</div>
               </div>
               <div class="bg-surface-light p-4" style="margin: 0px 0px 10px 0px;">
                 <div>Sortierung:&nbsp;
@@ -195,7 +195,7 @@ export default {
     filter(input, query) {
       const res = {};
       for (const key in input) {
-        if (key.includes(query)) {
+        if (key.toLowerCase().includes(query.toLowerCase())) {
           res[key] = input[key];
         }
       }

@@ -12,7 +12,7 @@
         <v-row>
           <v-col>
             <div style="font-weight: 100; margin: -30px 0px 0px 10px">
-              Dokumente aus der frühen Gründungsphase des Instituts (1963–1970)
+              Dokumente aus der frühen Gründungsphase des Instituts (1963-1971)
             </div>
           </v-col>
         </v-row>
@@ -30,7 +30,7 @@
     <v-navigation-drawer expand-on-hover permanent rail>
       <v-list>
         <v-list-item href="/plus/idsgg/" title="Übersicht" prepend-icon="mdi-home"></v-list-item>
-        <v-list-item href="/plus/idsgg/search" title="Findebuch"
+        <v-list-item href="/plus/idsgg/search" title="Findbuch"
           prepend-icon="mdi-text-box-search-outline"></v-list-item>
         <v-list-item href="/plus/idsgg/browse" title="Verzeichnis" prepend-icon="mdi-file-cabinet"></v-list-item>
         <v-list-item href="/plus/idsgg/data" title="Daten" prepend-icon="mdi-download"></v-list-item>

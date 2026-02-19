@@ -1,13 +1,13 @@
 <script setup>
 useHead({
-  title: "IDS‑Gründungsgeschichte: Findebuch"
+  title: "IDS‑Gründungsgeschichte: Findbuch"
 })
 </script>
 
 <template>
   <v-row>
     <v-col style="max-width:80ch; margin-left:auto; margin-right:auto;">
-      <h1 style="margin-top:1rem">Findebuch</h1>
+      <h1 style="margin-top:1rem">Findbuch</h1>
     </v-col>
   </v-row>
   <v-row>
