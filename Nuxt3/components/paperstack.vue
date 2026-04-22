@@ -43,9 +43,9 @@
       </v-row>
       <v-row>
         <div style="margin-left: auto; margin-right: auto;">
-          <img :src="`/plus/idsgg/thumbnail/${source.id}.jpg`" alt="Aktenstapel - Symbolbild" v-if="source.has_fulltext"
+          <v-icon v-if="locked" size="64px" style="margin: 65px 0px 65px 0px;">mdi-lock-outline</v-icon>
+          <img v-else :src="`/plus/idsgg/thumbnail/${source.id}.jpg`" alt="Aktenstapel - Symbolbild"
             style="min-height: 200px; max-height: 200px; max-width: 280px; padding: 10px;" loading="lazy" />
-          <v-icon v-else style="min-height: 200px; font-size: 128px;">mdi-note-text-outline</v-icon>
         </div>
       </v-row>
       <v-row>
@@ -72,6 +72,10 @@ export default {
       type: Object,
       default: {}
     },
+    locked: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

@@ -8,19 +8,16 @@ useHead({
   <projectHeader />
   <v-row style="max-width:80ch; margin-left:auto; margin-right:auto;">
     <v-col>
-      Das hier zur Verfügung gestellte
-      Spezialarchiv umfasst Dokumente aus
+      Das hier zur Verfügung gestellte Spezialarchiv umfasst Dokumente aus
       der Gründungs- und Frühphase des Instituts für Deutsche Sprache (IDS)
       aus dem Zeitraum 1963 bis 1971. Die Digitalisate stammen aus dem
-      Vorstandsarchiv des IDS und wurden 2024/2025 im Rahmen eines <a href="/plus/idsgg/team">Projekts</a> zur
-      Gründungsgeschichte des IDS
-      erfasst und annotiert.
+      Vorstandsarchiv des IDS und wurden 2024/2025 im Rahmen einer Erhebung
+      zur <a href="/plus/idsgg/team">Gründungsgeschichte des IDS</a> erfasst und annotiert.
     </v-col>
   </v-row>
   <v-row style="max-width:80ch; margin-left:auto; margin-right:auto;">
     <v-col>
-      Die vorliegende Archiverfassung bietet die
-      Möglichkeit, die komplexen
+      Die vorliegende Archiverfassung bietet die Möglichkeit, die komplexen
       personellen und institutionellen Beziehungsgeflechte der
       IDS-Gründungsphase auf einer systematisch erschlossenen, transparent
       dokumentierten Datengrundlage zu rekonstruieren. Bei der

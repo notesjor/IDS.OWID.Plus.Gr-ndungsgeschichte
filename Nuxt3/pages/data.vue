@@ -33,13 +33,7 @@ useHead({
       <v-col>
         Für die Texterkennung kam die Software <a href="https://github.com/tesseract-ocr/tesseract">Tesseract OCR</a>,
         unterstützt durch <a href="https://github.com/DanBloomberg/leptonica">Leptonica</a>, zum
-        Einsatz. Im Anschluss wurden die Texte mithilfe des <a
-          href="https://notes.jan-oliver-ruediger.de/software/corpusexplorer-overview/">CorpusExplorer</a>
-        und des <a href="https://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/">TreeTagger</a>
-        bearbeitet, aufbereitet und annotiert. Diese Schritte umfassen die
-        Tokenisierung sowie die Kennzeichnung von Satzgrenzen, Wortarten (POS)
-        und Lemma-Informationen. Die finalen Texte wurden in gängige
-        Korpus-Formate exportiert.
+        Einsatz. 
       </v-col>
     </v-row>
     <v-row>
@@ -124,10 +118,7 @@ export default {
       items: [
         { name: 'TSV-Liste verknüpfter Institute', size: '7', unit: 'KB', url: '/plus/idsgg/data/list_company.tsv', desc: 'Die Liste umfasst neben dem Namen auch die Stadt, sowie GND/Wikidata-IDs' },
         { name: 'TSV-Liste verknüpfter Personen', size: '34', unit: 'KB', url: '/plus/idsgg/data/list_persons.tsv', desc: 'Die Basis-Daten zu den verknüpften Personen, inkl. GND/Wikidata-IDs' },
-        { name: 'TSV-Liste digitalisierter Dokumente', size: '126', unit: 'KB', url: '/plus/idsgg/data/list_documents.tsv', desc: 'Diese Liste ist die Datengrundlage für die Funktion: “Findbuch”' },
-        { name: 'Digitalisate (PDF-Scans)', size: '301', unit: 'MB', url: '/plus/idsgg/data/Digitalisate_PDF.zip', desc: 'PDF-Dokumente der digitalisierten Dokumente - nur Bilddaten' },
-        { name: 'Digitalisate (TXT-Dateien)', size: '522', unit: 'KB', url: '/plus/idsgg/data/Digitalisate_TXT.zip', desc: 'OCR-Erkannter Plaintext (Leptonica / Tesseract OCR) - Rohtext' },
-        { name: 'Korpus (verschiedene Formate)', size: '13', unit: 'MB', url: '/plus/idsgg/data/KorpusDaten.zip', desc: 'Korpusdaten in den Formaten: I5, KorAP, CorpusExplorer, CoNLL, TCF, CWB, SketchEngine, TreeTagger, WebLicht, R' }
+        { name: 'TSV-Liste digitalisierter Dokumente', size: '126', unit: 'KB', url: '/plus/idsgg/data/list_documents.tsv', desc: 'Diese Liste ist die Datengrundlage für die Funktion: “Findbuch”' }
       ],
     }
   },
