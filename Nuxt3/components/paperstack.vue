@@ -1,5 +1,5 @@
 <template>
-  <v-card @click="$emit('callback', source.id)" style="max-width: 740px; min-width: 740px;" elevation="0">
+  <v-card @click="$emit('callback', source.id)" style="max-width: 740px; min-width: 740px; margin-bottom: 10px;" elevation="0">
     <v-card-text>
       <v-col cols="1" style="margin:-15px 0px 0px -15px">
         <div style="margin-left: auto; margin-right: auto; display: inline-block;">
@@ -9,7 +9,7 @@
         </div>
       </v-col>
       <v-col cols="11">
-        <div style="margin:-80px 0px 0px 60px">
+        <div style="margin:-75px 0px 0px 60px">
           <v-row>
             <div style="width: 100%; font-weight: 400; font-size: 1.1rem;">
               {{ source.title }}

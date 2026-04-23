@@ -23,7 +23,7 @@
         </v-tooltip>
       </a>
       <span>:</span>
-      <personCounter :source="data" mode="author" style="margin:-3px 0px 0px 0px" />
+      <personCounterSmall :source="data" mode="author" style="margin:-3px 0px 0px 0px" />
     </v-row>
     <v-row>
       <span style="margin:0px 0px 10px 20px; font-size:0.9rem; font-weight: 300;">{{ data.info }}</span>

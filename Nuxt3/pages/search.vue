@@ -51,9 +51,11 @@ useHead({
             <div>Daten werden geladen...</div>
           </div>
         </div>
-        <div v-show="!loading" style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:flex-start;" id="results">
-          <div v-for="(v, k) in esResults" :key="k">
-            <paperstack :source="v" @callback="showItemDialog" :locked="locked.has(v.id)" />
+        <div v-show="!loading" style="display:flex; flex-wrap:wrap; gap:0.5rem; align-items:flex-start;" id="results">
+          <div style="margin:0px 0px 0px 40px">
+            <div v-for="(v, k) in esResults" :key="k">
+              <paperstack :source="v" @callback="showItemDialog" :locked="locked.has(v.id)" />
+            </div>
           </div>
         </div>
       </div>
