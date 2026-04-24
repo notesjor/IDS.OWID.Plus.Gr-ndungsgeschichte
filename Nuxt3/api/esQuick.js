@@ -68,7 +68,6 @@ export default class esQuick {
   }
 
   easySearchGetHits(data) {
-    console.log(data);
     return data.hits.hits;
   }
 }

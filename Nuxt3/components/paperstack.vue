@@ -4,7 +4,7 @@
       <v-col cols="1" style="margin:-15px 0px 0px -15px">
         <div style="margin-left: auto; margin-right: auto; display: inline-block;">
           <v-icon v-if="locked" size="40px" style="margin: 0px 0px 0px 0px;">mdi-archive-outline</v-icon>
-          <img v-else :src="`/plus/idsgg/thumbnail/${source.id}.jpg`" alt="Aktenstapel - Symbolbild"
+          <img v-else :src="`/thumbnail/${source.id}.jpg`" alt="Aktenstapel - Symbolbild"
             style="max-width: 100%; padding: 3px;" loading="lazy" />
         </div>
       </v-col>

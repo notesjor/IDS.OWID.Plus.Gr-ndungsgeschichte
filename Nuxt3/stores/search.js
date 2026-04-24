@@ -2,13 +2,31 @@
 import { defineStore } from "pinia";
 import { LocalSearch } from "@/api/localSearch";
 
+const SEARCH_STORE_STORAGE_KEY = "IDS_search_store";
+const STORAGE_VERSION = 1;
+
+function canUseLocalStorage() {
+  return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+}
+
 export const useSearchStore = defineStore("search", {
   actions: {
     initialize() {
-      if(this.is_initialized)
-        return;
+      if (this.is_initialized) return;
 
-      var data = this.all.hits.hits.map((x) => x._source);
+      if (canUseLocalStorage() && this.tryRestoreFromLocalStorage()) {
+        return;
+      }
+
+      this.buildSearchState();
+      this.is_initialized = true;
+
+      if (canUseLocalStorage()) {
+        this.setupLocalStorageSync();
+      }
+    },
+    buildSearchState() {
+      const data = this.all.hits.hits.map((x) => x._source);
       this.localSearch = new LocalSearch({
         data: data,
         mapping: {
@@ -40,9 +58,82 @@ export const useSearchStore = defineStore("search", {
       this.companies.hits.hits.forEach(x => {
         dictionary[x._source.name] = x._source;
       });
-      this.companies = dictionary;      
+      this.companies = dictionary;
+    },
+    tryRestoreFromLocalStorage() {
+      if (!canUseLocalStorage()) return false;
 
-      this.is_initialized = true;
+      try {
+        const raw = window.localStorage.getItem(SEARCH_STORE_STORAGE_KEY);
+        if (!raw) return false;
+
+        const data = JSON.parse(raw);
+        if (!data || data.version !== STORAGE_VERSION) return false;
+
+        this.buildSearchState();
+        this.is_initialized = true;
+        this.restorePersistedData(data);
+        this.setupLocalStorageSync();
+
+        return true;
+      } catch (error) {
+        console.warn("Could not restore search store:", error);
+        return false;
+      }
+    },
+    restorePersistedData(data) {
+      if (!this.localSearch) return;
+
+      if (data.query && typeof data.query === "object") {
+        Object.assign(this.localSearch.query, data.query);
+      }
+
+      if (data.search_result !== undefined) {
+        this.search_result = data.search_result;
+      }
+    },
+    setupLocalStorageSync() {
+      if (!canUseLocalStorage() || this._storageSyncSetup) return;
+
+      this._storageSyncSetup = true;
+
+      window.addEventListener("storage", (event) => {
+        if (event.key !== SEARCH_STORE_STORAGE_KEY) return;
+        this.restoreFromLocalStorage();
+      });
+
+      this.$subscribe(() => {
+        this.persistToLocalStorage();
+      });
+    },
+    persistToLocalStorage() {
+      if (!canUseLocalStorage() || !this.localSearch) return;
+
+      try {
+        const payload = {
+          version: STORAGE_VERSION,
+          query: this.localSearch.query,
+          search_result: this.search_result,
+        };
+        window.localStorage.setItem(SEARCH_STORE_STORAGE_KEY, JSON.stringify(payload));
+      } catch (error) {
+        console.warn("Could not persist search store:", error);
+      }
+    },
+    restoreFromLocalStorage() {
+      if (!canUseLocalStorage() || !this.localSearch) return;
+
+      try {
+        const raw = window.localStorage.getItem(SEARCH_STORE_STORAGE_KEY);
+        if (!raw) return;
+
+        const data = JSON.parse(raw);
+        if (!data || data.version !== STORAGE_VERSION) return;
+
+        this.restorePersistedData(data);
+      } catch (error) {
+        console.warn("Could not restore search store:", error);
+      }
     },
     getCurrentData() {
       if (!this.is_initialized) this.initialize();
@@ -73,6 +164,7 @@ export const useSearchStore = defineStore("search", {
     return {
       is_initialized: false,
       localSearch: null,
+      _storageSyncSetup: false,
 
       search_result: null,
       all: {

@@ -64,9 +64,8 @@ export default {
    methods: {
     search(key, value) {
       const params = new URLSearchParams(window.location.search);
-      console.log(window.location.pathname);
       params.set(key, value);
-      const newUrl = `/plus/idsgg/search?${params.toString()}`;
+      const newUrl = `/search?${params.toString()}`;
       window.history.pushState({}, '', newUrl);
       window.location.reload();
     }

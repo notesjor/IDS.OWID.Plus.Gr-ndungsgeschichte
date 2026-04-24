@@ -39,14 +39,14 @@ export default defineNuxtConfig({
       leftIconHref: "https://www.owid.de/plus/index.html",
       rightIconHref: "https://www.ids-mannheim.de/",
 
-      footerContact: "mailto:ruediger@ids-mannheim.de",
+      footerContact: "mailto:scholl@ids-mannheim.de",
       footerImpressum: "https://www.owid.de/wb/owid/impressum.html",
       footerDsgvo: "https://www.owid.de/wb/owid/privacy.html"
     }
   },
 
   app: {
-    baseURL: "/plus/idsgg",
+    baseURL: "/",
     head: {
       title: "Gründungsgeschichte",
       htmlAttrs: { lang: "de" },

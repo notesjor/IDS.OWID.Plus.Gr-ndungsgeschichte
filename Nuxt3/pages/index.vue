@@ -12,7 +12,7 @@ useHead({
       der Gründungs- und Frühphase des Instituts für Deutsche Sprache (IDS)
       aus dem Zeitraum 1963 bis 1971. Die Digitalisate stammen aus dem
       Vorstandsarchiv des IDS und wurden 2024/2025 im Rahmen einer Erhebung
-      zur <a href="/plus/idsgg/team">Gründungsgeschichte des IDS</a> erfasst und annotiert.
+      zur <a href="/team">Gründungsgeschichte des IDS</a> erfasst und annotiert.
     </v-col>
   </v-row>
   <v-row style="max-width:80ch; margin-left:auto; margin-right:auto;">
@@ -31,7 +31,7 @@ useHead({
 
   <v-row style="max-width:80ch; margin-left:auto; margin-right:auto;">
     <v-col cols="4">
-      <a href="/plus/idsgg/search" style="cursor: pointer;">
+      <a href="/search" style="cursor: pointer;">
         <div
           style="border:1px #ccc solid; border-radius: 5px; padding: 10px; background-color: rgba(0, 0, 0, 0.05); margin-top:10px">
           <div style="text-align: center;">
@@ -45,7 +45,7 @@ useHead({
       </a>
     </v-col>
     <v-col cols="4">
-      <a href="/plus/idsgg/browse" style="cursor: pointer;">
+      <a href="/browse" style="cursor: pointer;">
         <div
           style="border:1px #ccc solid; border-radius: 5px; padding: 10px; background-color: rgba(0, 0, 0, 0.05); margin-top:10px">
           <div style="text-align: center;">
@@ -59,15 +59,14 @@ useHead({
       </a>
     </v-col>
     <v-col cols="4">
-      <a href="/plus/idsgg/data" style="cursor: pointer;">
+      <a href="/data" style="cursor: pointer;">
         <div
           style="border:1px #ccc solid; border-radius: 5px; padding: 10px; background-color: rgba(0, 0, 0, 0.05); margin-top:10px">
           <div style="text-align: center;">
             <v-icon style="font-size: 60px;">
               mdi-download
             </v-icon>
-            <div><strong>Download</strong><br />Alle Daten stehen zum Download für die nicht-kommerzielle Forschung und
-              Lehre zur Verfügung.</div>
+            <div><strong>Download</strong><br />Alle freigegebenen Daten stehen zum Download für die nicht-kommerzielle Nutzung zur Verfügung.</div>
           </div>
         </div>
       </a>

@@ -33,7 +33,7 @@ useHead({
       <v-col>
         Für die Texterkennung kam die Software <a href="https://github.com/tesseract-ocr/tesseract">Tesseract OCR</a>,
         unterstützt durch <a href="https://github.com/DanBloomberg/leptonica">Leptonica</a>, zum
-        Einsatz. 
+        Einsatz.
       </v-col>
     </v-row>
     <v-row>
@@ -56,10 +56,8 @@ useHead({
           Projektpublikation
         </div>
         <div style="margin: 0px 10px 20px 10px; font-size: 0.85rem; font-style: italic;">
-          Scholl, Stefan / Waßmer, Lea / Dang Anh, Mark / Müller-Spitzer,
-          Carolin (in Vorbereitung): Die Frühzeit des Instituts für Deutsche
-          Sprache – Einblicke aus der Erschließung des Vorstandsarchivs. In:
-          Sprachreport 2/2026.
+          Scholl, Stefan / Waßmer, Lea / Dang Anh, Mark / Müller-Spitzer, Carolin (in Vorbereitung): Die Frühzeit des
+          Instituts für Deutsche Sprache – Einblicke aus der Erschließung des Vorstandsarchivs. In: Sprachreport 2/2026.
         </div>
         <div style="font-weight: 300;">
           Datensatz
@@ -68,7 +66,7 @@ useHead({
           Waßmer, Lea / Rüdiger, Jan Oliver / Scholl, Stefan / Dang Anh, Mark /
           Müller-Spitzer, Carolin (2026): IDS-Gründungsgeschichte. Dokumente aus
           der frühen Gründungsphase des Instituts (1963–1971).
-          https://owid.de/plus/idsgg/data/.
+          https://gruendungsgeschichte.ids-mannheim.de/data/.
         </div>
         <div style="font-weight: 300;">
           Webapplikation
@@ -76,7 +74,7 @@ useHead({
         <div style="margin: 0px 10px 20px 10px; font-size: 0.85rem; font-style: italic;">
           Rüdiger, Jan Oliver / Waßmer, Lea / Scholl, Stefan / Dang Anh, Mark /
           Müller-Spitzer, Carolin (2026): IDS-Gründungsgeschichte –
-          Webapplikation. https://owid.de/plus/idsgg/.
+          Webapplikation. https://gruendungsgeschichte.ids-mannheim.de/.
         </div>
       </v-col>
     </v-row>
@@ -116,9 +114,9 @@ export default {
   data() {
     return {
       items: [
-        { name: 'TSV-Liste verknüpfter Institute', size: '7', unit: 'KB', url: '/plus/idsgg/data/list_company.tsv', desc: 'Die Liste umfasst neben dem Namen auch die Stadt, sowie GND/Wikidata-IDs' },
-        { name: 'TSV-Liste verknüpfter Personen', size: '34', unit: 'KB', url: '/plus/idsgg/data/list_persons.tsv', desc: 'Die Basis-Daten zu den verknüpften Personen, inkl. GND/Wikidata-IDs' },
-        { name: 'TSV-Liste digitalisierter Dokumente', size: '126', unit: 'KB', url: '/plus/idsgg/data/list_documents.tsv', desc: 'Diese Liste ist die Datengrundlage für die Funktion: “Findbuch”' }
+        { name: 'TSV-Liste verknüpfter Institute', size: '7', unit: 'KB', url: '/data/list_company.tsv', desc: 'Die Liste umfasst neben dem Namen auch die Stadt, sowie GND/Wikidata-IDs' },
+        { name: 'TSV-Liste verknüpfter Personen', size: '34', unit: 'KB', url: '/data/list_persons.tsv', desc: 'Die Basis-Daten zu den verknüpften Personen, inkl. GND/Wikidata-IDs' },
+        { name: 'TSV-Liste digitalisierter Dokumente', size: '126', unit: 'KB', url: '/data/list_documents.tsv', desc: 'Diese Liste ist die Datengrundlage für die Funktion: “Findbuch”' }
       ],
     }
   },
